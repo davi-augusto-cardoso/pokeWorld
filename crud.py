@@ -1,172 +1,140 @@
-from imports import pcg, sql
+from imports import json, os, mysql
 
 class CRUD:
     
     def __init__(self) -> None:
-        self.__cursor       = None
-        self.__connection   = None
+        self.__cursor = None
+        self.__connection = None
     
-    def open_connection(self, host:str, database:str, user:str, password:str)->int:
-        """
-        Abre uma conexão com o banco de dados e cria um cursor para realizar querys.
-        Args:
-            host (str): O nome do host em que deseja se conectar
-            database (str): O nome do database em que deseja se conectar
-            user (str): O user do database que deseja se conectar
-            password (str): A senha do user que deseja se conectar
-        Returns:
-            1 -> Sucesso | -1 -> Falha
-        """
+    def open_connection(self) -> int:
+        """Abre uma conexão com o banco de dados e cria um cursor para realizar queries."""
+        credentials = self.__get_credentials()
+        
         try:
             # Configurações de conexão
-            self.__connection = pcg.connect(host, database, user, password)
+            self.__connection = mysql.connect(**credentials)
             
             # Cria um cursor para interagir com o banco de dados
             self.__cursor = self.__connection.cursor()
-        except pcg.OperationalError as error:
-            print(f"\033[91m{error}\033[0m")
+            print("Conexão estabelecida com sucesso!")
+            return 1
+        except mysql.OperationalError as error:
+            print(f"Erro de conexão: {error}")
+            return -1
     
-    def close_connection(self)->int:
-        """Encerra conexão com o banco de dados fechando o cursor e a conexão.
-        Returns:
-            1 -> Sucesso | -1 -> Falha
-        """
+    def close_connection(self) -> int:
+        """Encerra a conexão com o banco de dados fechando o cursor e a conexão."""
         try:
             if self.__cursor:
                 self.__cursor.close()
                 
             if self.__connection:
                 self.__connection.close()
-                print("\033[34m Conexão encerrada.\033[0m")
+                print("Conexão encerrada.")
                 return 1
                 
-        except pcg.OperationalError as error:
-            print(f"\033{error}\033[0m")
+        except mysql.Error as error:
+            print(f"Erro ao encerrar a conexão: {error}")
             return -1
     
     def create(self, table: str, values: tuple) -> int:
-        """
-        Insere um novo registro na tabela especificada.
-
-        :param table: Nome da tabela
-        :param values: Tupla com os valores a serem inseridos
-        :return: 1 se a inserção foi bem-sucedida, -1 em caso de erro
-        """
-        # Cria uma consulta SQL segura para inserção
-        query = sql.SQL("INSERT INTO {table} VALUES ({values})").format(
-            table=sql.Identifier(table),
-            values=sql.SQL(', ').join(sql.Placeholder() * len(values))  # Cria placeholders
-        )
+        """Insere um novo registro na tabela especificada."""
+        query = f"INSERT INTO {table} VALUES ({', '.join(['%s'] * len(values))})"
         
         try:
-            # Executa a consulta com os valores fornecidos
             self.__cursor.execute(query, values)
             self.__connection.commit()
-            print("\033[34mInserção realizada com sucesso.\033[0m")
+            print("Inserção realizada com sucesso.")
             return 1
             
-        except pcg.DatabaseError as error:
-            print(f"\033[31mErro de banco de dados: {error}\033[0m")
+        except mysql.DatabaseError as error:
+            print(f"Erro de banco de dados: {error}")
             return -1
     
     def read(self, table: str, cols: tuple, where_conditions: dict = None):
-        """
-        Realiza uma consulta SELECT nas colunas especificadas de uma tabela com condições opcionais.
+        """Realiza uma consulta SELECT nas colunas especificadas de uma tabela com condições opcionais."""
+        query = f"SELECT {', '.join(cols)} FROM {table}"
         
-        :param table: Nome da tabela
-        :param cols: Tupla contendo os nomes das colunas a serem lidas
-        :param conditions: Dicionário com condições para o WHERE {coluna: valor}
-        :return: Dados lidos ou -1 em caso de erro
-        """
-        # Cria a consulta SQL para leitura
-        query = sql.SQL("SELECT {values} FROM {table}").format(
-            table=sql.Identifier(table),
-            values=sql.SQL(', ').join(sql.Identifier(col) for col in cols)
-        )
-        
-        # Adiciona a cláusula WHERE, se houver condições
         if where_conditions:
-            where_clause = sql.SQL(' AND ').join(
-                sql.Composed([sql.Identifier(col), sql.SQL(" = "), sql.Placeholder(col)]) for col in conditions
-            )
-            query = query + sql.SQL(" WHERE ") + where_clause
+            where_clause = ' AND '.join([f"{col} = %s" for col in where_conditions])
+            query += " WHERE " + where_clause
 
         try:
-            # Executa a consulta com as condições, se houver
-            self.__cursor.execute(query, where_conditions)
+            self.__cursor.execute(query, tuple(where_conditions.values()) if where_conditions else None)
             result = self.__cursor.fetchall()
-            print("\033[34mLeitura realizada com sucesso.\033[0m")
+            print("Leitura realizada com sucesso.")
             return result
             
-        except pcg.OperationalError as error:
-            print(f"\033[31mErro de operação: {error}\033[0m")
+        except mysql.Error as error:
+            print(f"Erro de operação: {error}")
             return -1
     
     def update(self, table: str, set_values: dict, where_conditions: dict = None) -> int:
-        """
-        Atualiza registros em uma tabela com base nas condições fornecidas.
+        """Atualiza registros em uma tabela com base nas condições fornecidas."""
+        set_clause = ', '.join([f"{col} = %s" for col in set_values])
+        where_clause = ' AND '.join([f"{col} = %s" for col in where_conditions]) if where_conditions else ""
 
-        :param table: Nome da tabela
-        :param set_values: Dicionário contendo os valores a serem atualizados {coluna: valor}
-        :param where_conditions: Dicionário contendo as condições de atualização {coluna: valor}
-        :return: 1 se a atualização foi bem-sucedida, -1 se houve um erro
-        """
-        # Construção da consulta SQL dinâmica
-        query = sql.SQL("UPDATE {table} SET {set_clause} WHERE {where_clause}").format(
-            table=sql.Identifier(table),
-            set_clause=sql.SQL(', ').join(
-                sql.Composed([sql.Identifier(col), sql.SQL(" = "), sql.Placeholder(col)]) for col in set_values
-            ),
-            where_clause=sql.SQL(' AND ').join(
-                sql.Composed([sql.Identifier(col), sql.SQL(" = "), sql.Placeholder(col)]) for col in where_conditions
-            )
-        )
+        query = f"UPDATE {table} SET {set_clause}"
+        if where_conditions:
+            query += " WHERE " + where_clause
 
-        # Combina os valores para o SET e WHERE
-        values = {**set_values, **where_conditions}
-
+        values = list(set_values.values()) + (list(where_conditions.values()) if where_conditions else [])
+        
         try:
-            # Executa a consulta com os valores fornecidos
             self.__cursor.execute(query, values)
             self.__connection.commit()
-            print("\033[34m Atualização realizada com sucesso.\033[0m")
+            print("Atualização realizada com sucesso.")
             return 1
             
-        except pcg.OperationalError as error:
-            print(f"\033[31mErro de operação: {error}\033[0m")
+        except mysql.Error as error:
+            print(f"Erro de operação: {error}")
             return -1
     
-    def delete(self, table: str, where_conditions: dict= None) -> int:
-        """
-        Remove registros de uma tabela com base nas condições fornecidas.
-
-        :param table: Nome da tabela
-        :param conditions: Dicionário com condições para o WHERE {coluna: valor}
-        :return: 1 se a exclusão foi bem-sucedida, -1 em caso de erro
-        """
-        # Cria a consulta SQL para exclusão
-        query = sql.SQL("DELETE FROM {table}").format(
-            table=sql.Identifier(table)
-        )
+    def delete(self, table: str, where_conditions: dict = None) -> int:
+        """Remove registros de uma tabela com base nas condições fornecidas."""
+        query = f"DELETE FROM {table}"
         
-        # Adiciona a cláusula WHERE, se houver condições
         if where_conditions:
-            where_clause = sql.SQL(' AND ').join(
-                sql.Composed([sql.Identifier(col), sql.SQL(" = "), sql.Placeholder(col)]) for col in conditions
-            )
-            query = query + sql.SQL(" WHERE ") + where_clause
+            where_clause = ' AND '.join([f"{col} = %s" for col in where_conditions])
+            query += " WHERE " + where_clause
         else:
-            print("\033[31mErro: Condições de exclusão não fornecidas.\033[0m")
+            print("Erro: Condições de exclusão não fornecidas.")
             return -1
 
         try:
-            # Executa a consulta com as condições fornecidas
-            self.__cursor.execute(query, where_conditions)
+            self.__cursor.execute(query, tuple(where_conditions.values()) if where_conditions else None)
             self.__connection.commit()
-            print("\033[34mExclusão realizada com sucesso.\033[0m")
+            print("Exclusão realizada com sucesso.")
             return 1
             
-        except pcg.OperationalError as error:
-            print(f"\033[31mErro de operação: {error}\033[0m")
+        except mysql.Error as error:
+            print(f"Erro de operação: {error}")
             return -1
         
+    def __get_credentials(self):
+        file_path = 'credentials.json'
+        credentials = None
+
+        if os.path.exists(file_path):
+            try:
+                with open(file_path, 'r', encoding='utf-8') as file:
+                    credentials = json.load(file)
+            except UnicodeDecodeError:
+                print("Erro de encoding ao ler o arquivo JSON. Verifique o encoding ou corrija o arquivo.")
+                raise
+            except json.JSONDecodeError:
+                print("Arquivo JSON está corrompido ou contém dados inválidos.")
+                raise
+        else:
+            credentials = {
+                'host':     input("Digite o host: "),
+                'port':     input("Digite a porta:"),
+                'user':     input("Digite o usuário: "),
+                'password': input("Digite a senha: "),
+                'database': input("Digite o nome do database: ")
+            }
+            
+            with open(file_path, 'w', encoding='utf-8') as file:
+                json.dump(credentials, file, ensure_ascii=False)
+
+        return credentials

@@ -1,4 +1,5 @@
-from flask import Flask
+from flask import Flask, jsonify, request
 from flask_cors import CORS
-import psycopg2 as pcg
-from psycopg2 import sql
+import mysql.connector as mysql
+import os
+import json
