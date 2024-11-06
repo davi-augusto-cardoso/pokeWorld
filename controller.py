@@ -2,6 +2,7 @@ from utils import CRUD
 from imports import json
 
 class Controller:
+    
     def __init__(self):
         self.__crud = CRUD()
         self.__crud.open_connection()
@@ -11,7 +12,7 @@ class Controller:
                             list(params_pokemon.keys()), 
                             list(params_pokemon.values()))
     
-    def list_pokemons(self, cols:tuple = ('nome', 'forca')):
+    def list_pokemons(self, cols:tuple):
         return self.__crud.read('pokemon', cols)
     
     def delete_pokemon(self, id_pokemon):
