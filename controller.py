@@ -60,7 +60,6 @@ charmander = {
     "peso": "8.5",
     "Shyne": False,
     "nivel": "5",
-    "fk_Party_id_Party": None,
     "selvagem": True
 }
 
@@ -112,16 +111,3 @@ new_pikachu = {
     "fk_Party_id_Party": None,
     "selvagem": True
 }
-
-
-# set_clause = ', '.join([f"{col[0]} = {col[1]}" for col in new_pikachu.items()])
-# print(set_clause)
-# pokemons_list = controller.list_pokemons()
-# print(pokemons_list)
-
-# controller.edit_pokemon(2, new_pikachu)
-
-# pokemons_list = controller.list_pokemons()
-# print(pokemons_list)
-
-print('aõ')
