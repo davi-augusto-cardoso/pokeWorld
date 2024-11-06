@@ -37,12 +37,12 @@ class CRUD:
             print(f"Erro ao encerrar a conexão: {error}")
             return -1
     
-    def create(self, table: str, values: tuple) -> int:
+    def create(self, table: str, name_values:list, values: list) -> int:
         """Insere um novo registro na tabela especificada."""
-        query = f"INSERT INTO {table} VALUES ({', '.join(['%s'] * len(values))})"
-        
+        query = f"INSERT INTO {table} ({', '.join(name_values)}) VALUES ({', '.join(['%s'] * len(values))})"
+
         try:
-            self.__cursor.execute(query, values)
+            self.__cursor.execute(query, tuple(values))
             self.__connection.commit()
             print("Inserção realizada com sucesso.")
             return 1
