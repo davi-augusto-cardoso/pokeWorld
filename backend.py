@@ -14,6 +14,12 @@ class Controller:
     def list_pokemons(self, cols:tuple = ('nome', 'forca')):
         return self.__crud.read('pokemon', cols)
     
+    def delete_pokemon(self, id_pokemon):
+        self.__crud.delete('pokemon', 'Id_pokemon', id_pokemon)
+    
+    def edit_pokemon(self, id_pokemon:int, new_params:dict):
+        self.__crud.update('pokemon', new_params, 'Id_pokemon', id_pokemon)
+    
     def add_trainer(self, params_treinador):
         self.__crud.create('treinador', list(params_treinador.values()))
         
@@ -93,11 +99,28 @@ meowth = {
     "selvagem": True
 }
 
+new_pikachu = {
+    "nome": "Pikachu",
+    # "Id_pokemon": "NULL",
+    "forca": "90",
+    "resistencia": "90",
+    "velocidade": "180",
+    "peso": "6.0",
+    "Shyne": False,
+    "nivel": "5",
+    "fk_Party_id_Party": None,
+    "selvagem": True
+}
 
-# controller.add_pokemon(pikachu)
-# controller.add_pokemon(meowth)
-pokemons_list = controller.list_pokemons()
-print(pokemons_list)
 
-pokemons_list = controller.list_pokemons()
-print(pokemons_list)
+# set_clause = ', '.join([f"{col[0]} = {col[1]}" for col in new_pikachu.items()])
+# print(set_clause)
+# pokemons_list = controller.list_pokemons()
+# print(pokemons_list)
+
+# controller.edit_pokemon(2, new_pikachu)
+
+# pokemons_list = controller.list_pokemons()
+# print(pokemons_list)
+
+print('aõ')

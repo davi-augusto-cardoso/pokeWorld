@@ -7,7 +7,7 @@ class CRUD:
         self.__connection = None
     
     def open_connection(self) -> int:
-        """Abre uma conexão com o banco de dados e cria um cursor para realizar queries."""
+        """Abre uma conexao com o banco de dados e cria um cursor para realizar queries."""
         credentials = self.__get_credentials()
         
         try:
@@ -19,22 +19,22 @@ class CRUD:
             print("Conexão estabelecida com sucesso!")
             return 1
         except mysql.OperationalError as error:
-            print(f"Erro de conexão: {error}")
+            print(f"Erro de conexao: {error}")
             return -1
     
     def close_connection(self) -> int:
-        """Encerra a conexão com o banco de dados fechando o cursor e a conexão."""
+        """Encerra a conexao com o banco de dados fechando o cursor e a conexao."""
         try:
             if self.__cursor:
                 self.__cursor.close()
                 
             if self.__connection:
                 self.__connection.close()
-                print("Conexão encerrada.")
+                print("Conexao encerrada.")
                 return 1
                 
         except mysql.Error as error:
-            print(f"Erro ao encerrar a conexão: {error}")
+            print(f"Erro ao encerrar a conexao: {error}")
             return -1
     
     def create(self, table: str, name_values:list, values: list) -> int:
@@ -44,7 +44,7 @@ class CRUD:
         try:
             self.__cursor.execute(query, tuple(values))
             self.__connection.commit()
-            print("Inserção realizada com sucesso.")
+            print("Insercao realizada com sucesso.")
             return 1
             
         except mysql.DatabaseError as error:
@@ -52,7 +52,7 @@ class CRUD:
             return -1
     
     def read(self, table: str, cols: tuple, where_conditions: dict = None):
-        """Realiza uma consulta SELECT nas colunas especificadas de uma tabela com condições opcionais."""
+        """Realiza uma consulta SELECT nas colunas especificadas de uma tabela com condicoes opcionais."""
         query = f"SELECT {', '.join(cols)} FROM {table}"
         
         if where_conditions:
@@ -66,49 +66,41 @@ class CRUD:
             return result
             
         except mysql.Error as error:
-            print(f"Erro de operação: {error}")
+            print(f"Erro de operacao: {error}")
             return -1
     
-    def update(self, table: str, set_values: dict, where_conditions: dict = None) -> int:
-        """Atualiza registros em uma tabela com base nas condições fornecidas."""
-        set_clause = ', '.join([f"{col} = %s" for col in set_values])
-        where_clause = ' AND '.join([f"{col} = %s" for col in where_conditions]) if where_conditions else ""
-
-        query = f"UPDATE {table} SET {set_clause}"
-        if where_conditions:
-            query += " WHERE " + where_clause
-
-        values = list(set_values.values()) + (list(where_conditions.values()) if where_conditions else [])
+    def update(self, table: str, set_values: dict, id_key: str, id_value: int) -> int:
+        """Atualiza registros em uma tabela com base nas condicoes fornecidas."""
         
+        # Garantir que os valores de tipo string sejam colocados entre aspas
+        set_clause = ', '.join([f"{col} = %s" for col in set_values.keys()])
+        
+        query = f"UPDATE {table} SET {set_clause} WHERE {id_key} = %s"
+
+        # Prepare os valores a serem passados para a query, incluindo o valor do ID
+        values = list(set_values.values()) + [id_value]
+
         try:
-            self.__cursor.execute(query, values)
+            self.__cursor.execute(query, values)  # Passa os valores de forma segura
             self.__connection.commit()
-            print("Atualização realizada com sucesso.")
+            print("Atualizacao realizada com sucesso.")
             return 1
             
         except mysql.Error as error:
-            print(f"Erro de operação: {error}")
-            return -1
-    
-    def delete(self, table: str, where_conditions: dict = None) -> int:
-        """Remove registros de uma tabela com base nas condições fornecidas."""
-        query = f"DELETE FROM {table}"
-        
-        if where_conditions:
-            where_clause = ' AND '.join([f"{col} = %s" for col in where_conditions])
-            query += " WHERE " + where_clause
-        else:
-            print("Erro: Condições de exclusão não fornecidas.")
+            print(f"Erro de operacao: {error}")
             return -1
 
+    def delete(self, table: str, id_key:str,  id_value:int) -> int:
+        """Remove registros de uma tabela com base nas condicoes fornecidas."""
+        query = f"DELETE FROM {table} WHERE {id_key} = {id_value}"
         try:
-            self.__cursor.execute(query, tuple(where_conditions.values()) if where_conditions else None)
+            self.__cursor.execute(query)
             self.__connection.commit()
-            print("Exclusão realizada com sucesso.")
+            print("Exclusao realizada com sucesso.")
             return 1
             
         except mysql.Error as error:
-            print(f"Erro de operação: {error}")
+            print(f"Erro de operacao: {error}")
             return -1
         
     def __get_credentials(self):

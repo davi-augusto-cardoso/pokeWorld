@@ -4,24 +4,100 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="src/pokebola.ico">
-    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/inputmask/5.0.6/inputmask.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Itim&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Nerko+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
     <script src="script.js" defer></script>
     <title>Pokedex</title>
 </head>
 <body>
     <header>
-        <button id="burger-bar" class="burger-bar"><img src="src/burger-menu-svgrepo-com.svg" alt="Botão de menu"></button>
+        <button id="burger-bar" class="burger-bar"><img src='src/burger-menu-svgrepo-com.svg' alt='Botão de menu'></button>
         <h1>Pokedex</h1>
+        <div class="espacador"></div>
     </header>
     <main>
         <div class="menu" id="menu">
+
         </div>
-        <div class="conteudo" id="conteudo">
-        
+        <div class="conteudo" id="conteudo" hidden>
+            <div class="acoes" id="acoes">
+                <input type="search" name="nome" id="pesquisa" placeholder="Digite o nome do pokemon">
+                <select name="tipo" id="tipo">
+                    <option value="todos">Todos</option>
+                    <option value="agua">Água</option>
+                    <option value="fogo">Fogo</option>
+                    <option value="planta">Planta</option>
+                    <option value="veneno">Veneno</option>
+                    <option value="normal">Normal</option>
+                    <option value="inseto">Inseto</option>
+                    <option value="eletrico">Eletrico</option>
+                    <option value="fada">Fada</option>
+                </select>
+            <button id="adicionar"><img src="src/plus-svgrepo-com.svg" alt="Adicionar">Adiconar</button>
+            </div>
         </div>  
-        <div class="descricao" id="descricao">
-        
+        <div class="descricao" id="descricao" hidden>
+            <h1>Nome</h1>
+            <img src="src/pokebola.ico" alt="Imagem">
+        </div>
+        <div class="fundoModal">
+            <div class="modalAdicionarPoke" id="modalAdicionarPoke">
+                <div class="modalCima">
+                    <button id="fecharModal"><img src="src/clear-svgrepo-com.svg" alt="Fechar"></button>
+                    <h1>Adicionar Pokemon</h1>
+                    <div></div>
+                </div>
+                <form class="conteudoModal">
+                    <div class="input">
+                        <label for="nome">Nome</label>
+                        <input type="text" name="nome" id="nome">
+                    </div>
+                    <div class="input">
+                        <label for="forca">Força</label>
+                        <input type="number" name="forca" id="forca">
+                    </div>
+                    <div class="input">
+                        <label for="resistencia">Resistencia</label>
+                        <input type="number" name="resistencia" id="resistencia">
+                    </div>
+                    <div class="input">
+                        <label for="velocidade">Velocidade</label>
+                        <input type="number" name="velocidade" id="velocidade">
+                    </div>
+                    <div class="input">
+                        <label for="peso">Peso</label>
+                        <input type="number" name="peso" id="peso">
+                    </div>
+                    <div class="input">
+                        <label for="shyne">Shyne</label>
+                        <input type="checkbox" name="shyne" id="shyne">
+                    </div>
+                    <div class="input">
+                        <label for="nivel">Nivel</label>
+                        <input type="number" name="nivel" id="nivel">
+                    </div>
+                    <button type="submit" id="adicionarPoke">Adicionar</button>
+                </form>
+            </div>
         </div>
     </main>
 </body>
 </html>
+
+<!-- Pokemon:
+nome -> textarea
+força -> number
+resistência -> number
+velocidade -> number
+peso -> number
+shyne -> checkbox
+nivel -> number
+
+Treinador
+nome -> textarea
+data nascimento -> date
+gênero -> textarea
+cpf -> textarea -->
