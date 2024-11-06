@@ -51,7 +51,7 @@ class CRUD:
             print(f"Erro de banco de dados: {error}")
             return -1
     
-    def read(self, table: str, cols: tuple, where_conditions: dict = None):
+    def read(self, table: str, cols: tuple, where_conditions: dict = None)->json:
         """Realiza uma consulta SELECT nas colunas especificadas de uma tabela com condições opcionais e retorna os dados em formato JSON."""
         query = f"SELECT {', '.join(cols)} FROM {table}"
         
@@ -110,7 +110,8 @@ class CRUD:
         except mysql.Error as error:
             print(f"Erro de operacao: {error}")
             return -1
-        
+    
+    
     def __get_credentials(self):
         file_path = 'credentials.json'
         credentials = None
