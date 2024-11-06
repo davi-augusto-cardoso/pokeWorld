@@ -13,7 +13,7 @@ function mostraMenu() {
 }
 
 function criarJson() {
-    let values = {id: 0,nome: "", forca: 0, resistencia: 0, velocidade: 0, peso: 0, shyne: false, nivel: 0};
+    let values = {nome: "", forca: 0, resistencia: 0, velocidade: 0, peso: 0, shyne: false, nivel: 0};
     if (document.getElementById("nome").value == "" || document.getElementById("forca").value == "" || document.getElementById("resistencia").value == "" || document.getElementById("velocidade").value == "" || document.getElementById("peso").value == "" || document.getElementById("nivel").value == "") {
         alert("Favor preencher todos os campos");
         return;
@@ -55,7 +55,7 @@ function criarJson() {
 }
 
 function getPokemons(cols) {
-    fetch('http://127.0.0.1:5000/list_pokemons?cols=' + cols.join(','))
+    fetch('http://127.0.0.1:5000/list_pokemons')
         .then(response => response.json())  // Converte a resposta para JSON
         .then(data => {
             if (data.error) {

@@ -12,21 +12,22 @@ class Controller:
                             list(params_pokemon.keys()), 
                             list(params_pokemon.values()))
     
-    def list_pokemons(self, cols:tuple):
+    def list_pokemons(self, cols:tuple)->dict:
         return self.__crud.read('pokemon', cols)
     
-    def delete_pokemon(self, id_pokemon):
+    def delete_pokemon(self, id_pokemon:int):
         self.__crud.delete('pokemon', 'Id_pokemon', id_pokemon)
     
     def edit_pokemon(self, id_pokemon:int, new_params:dict):
         self.__crud.update('pokemon', new_params, 'Id_pokemon', id_pokemon)
     
-    def add_trainer(self, params_treinador):
+    def add_trainer(self, params_treinador:dict):
         self.__crud.create('treinador', list(params_treinador.values()))
         
-    
-    
-controller = Controller()
+    def list_trainer(self, id_treinador:int, params_treinador)->dict:
+        pass
+        # self.__crud.update('treinador', )
+        
 
 pikachu = {
     "nome": "Pikachu",

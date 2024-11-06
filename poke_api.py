@@ -6,7 +6,7 @@ controller = Controller()
 app = Flask(__name__)
 CORS(app)
 
-@app.route('/add_pokemon', methods=['POST'])
+@app.route('/pokemon', methods=['POST'])
 def add_pokemon():
     # Verifica se os dados do Pokémon foram enviados no corpo da requisição
     if not request.json:
@@ -21,7 +21,7 @@ def add_pokemon():
     return jsonify({'message': 'Pokémon adicionado com sucesso!'}), 201
 
 # Rota para listar Pokémons
-@app.route('/list_pokemons', methods=['GET'])
+@app.route('/pokemon', methods=['GET'])
 def list_pokemons():
     # Obtém as colunas desejadas da requisição ou usa todas por padrão
     cols = request.args.get('cols', 'nome, forca, resistencia, velocidade, peso, Shyne, nivel, fk_Party_id_Party, selvagem').split(',')
@@ -35,7 +35,7 @@ def list_pokemons():
         return jsonify({'error': 'Nenhum Pokémon encontrado'}), 404
 
 # Rota para deletar um Pokémon
-@app.route('/delete_pokemon/<int:id_pokemon>', methods=['DELETE'])
+@app.route('/pokemon/<int:id_pokemon>', methods=['DELETE'])
 def delete_pokemon(id_pokemon):
     # Chama o método para deletar um Pokémon pelo ID
     result = controller.delete_pokemon(id_pokemon)
@@ -46,7 +46,7 @@ def delete_pokemon(id_pokemon):
         return jsonify({'error': 'Erro ao deletar Pokémon'}), 500
 
 # Rota para editar um Pokémon
-@app.route('/edit_pokemon/<int:id_pokemon>', methods=['PUT'])
+@app.route('/pokemon/<int:id_pokemon>', methods=['PUT'])
 def edit_pokemon(id_pokemon):
     # Verifica se os dados do Pokémon foram enviados no corpo da requisição
     if not request.json:

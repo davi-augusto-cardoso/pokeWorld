@@ -52,7 +52,7 @@ class CRUD:
             return -1
     
     def read(self, table: str, cols: tuple, where_conditions: dict = None):
-        """Realiza uma consulta SELECT nas colunas especificadas de uma tabela com condicoes opcionais."""
+        """Realiza uma consulta SELECT nas colunas especificadas de uma tabela com condições opcionais e retorna os dados em formato JSON."""
         query = f"SELECT {', '.join(cols)} FROM {table}"
         
         if where_conditions:
@@ -62,11 +62,19 @@ class CRUD:
         try:
             self.__cursor.execute(query, tuple(where_conditions.values()) if where_conditions else None)
             result = self.__cursor.fetchall()
+
+            # Converte os resultados para uma lista de dicionários (um por linha de dados)
+            columns = [desc[0] for desc in self.__cursor.description]  # Obtém os nomes das colunas
+            result_dict = [dict(zip(columns, row)) for row in result]  # Junta as colunas com os dados
+
+            # Retorna os dados como JSON
+            json_result = json.dumps(result_dict, ensure_ascii=False)
+
             print("Leitura realizada com sucesso.")
-            return result
+            return json_result
             
         except mysql.Error as error:
-            print(f"Erro de operacao: {error}")
+            print(f"Erro de operação: {error}")
             return -1
     
     def update(self, table: str, set_values: dict, id_key: str, id_value: int) -> int:
