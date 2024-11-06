@@ -62,13 +62,14 @@ main {
     position: relative;
     background-color: rgb(209, 209, 209);
     width: 15vw;
-    height: 100.1%;
+    height: 99.7%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: start;
     font-family: 'itim', cursive;
     box-shadow: 3px 0px rgba(0, 0, 0, 0.382);
+    border-top: 2px solid rgba(0, 0, 0, 0.681);
 }
 
 .menu > h1 {
@@ -80,6 +81,14 @@ main {
     cursor: pointer;
 }
 
+.conteudo {
+    background-color:aqua ;
+    width: 60vw;
+    margin: 1vi 0 0 3vi;
+    border-radius: 1vi;
+    box-shadow: -3px 3px rgba(0, 0, 0, 0.382);
+}
+
 .fundoModal {
     display: flex;
     background-color: rgba(0, 0, 0, 0.21);
@@ -88,6 +97,10 @@ main {
     justify-content: center;
     align-items: center;
     position:absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
 }
 
 .modalAdicionarPoke {
@@ -97,10 +110,10 @@ main {
     align-items: center;
     background-color: rgb(255, 255, 255);
     position: absolute;
-    bottom: 18vi;
+    bottom: 13vi;
     width: 30vw;
     height: 55vh;
-
+    
 }
 
 .modalCima {
@@ -118,4 +131,11 @@ main {
 
 .conteudoModal {
     padding-bottom: 25px;
+}
+
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }

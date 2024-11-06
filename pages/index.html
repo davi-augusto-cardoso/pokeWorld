@@ -14,7 +14,7 @@
 </head>
 <body>
     <header>
-        <button id="burger-bar" class="burger-bar"><img src='src/burger-menu-svgrepo-com.svg' alt='Botão de menu'></button>
+        <button id="burger-bar" class="burger-bar" onclick="mostraMenu()"><img src='src/burger-menu-svgrepo-com.svg' alt='Botão de menu'></button>
         <h1>Pokedex</h1>
         <div class="espacador"></div>
     </header>
@@ -43,47 +43,51 @@
             <h1>Nome</h1>
             <img src="src/pokebola.ico" alt="Imagem">
         </div>
-        <div class="fundoModal">
-            <div class="modalAdicionarPoke" id="modalAdicionarPoke">
-                <div class="modalCima">
-                    <button id="fecharModal"><img src="src/clear-svgrepo-com.svg" alt="Fechar"></button>
-                    <h1>Adicionar Pokemon</h1>
-                    <div></div>
+    </main>
+    <!-- Modal para adicionar pokemon -->
+    <div class="fundoModal" style="display: flex;">
+        <div class="modalAdicionarPoke" id="modalAdicionarPoke">
+            <div class="modalCima">
+                <button id="fecharModal"><img src="src/clear-svgrepo-com.svg" alt="Fechar"></button>
+                <h1>Adicionar Pokemon</h1>
+                <div></div>
+            </div>
+            <div class="conteudoModal">
+                <input type="hidden" name="id" id="id">
+                <div class="nome">
+                    <label for="nome">Nome</label>
+                    <input type="text" name="nome" id="nome" placeholder="Ex:Pikachu">
                 </div>
-                <form class="conteudoModal">
-                    <div class="input">
-                        <label for="nome">Nome</label>
-                        <input type="text" name="nome" id="nome">
-                    </div>
-                    <div class="input">
-                        <label for="forca">Força</label>
-                        <input type="number" name="forca" id="forca">
-                    </div>
-                    <div class="input">
-                        <label for="resistencia">Resistencia</label>
-                        <input type="number" name="resistencia" id="resistencia">
-                    </div>
-                    <div class="input">
-                        <label for="velocidade">Velocidade</label>
-                        <input type="number" name="velocidade" id="velocidade">
-                    </div>
-                    <div class="input">
-                        <label for="peso">Peso</label>
-                        <input type="number" name="peso" id="peso">
-                    </div>
-                    <div class="input">
-                        <label for="shyne">Shyne</label>
-                        <input type="checkbox" name="shyne" id="shyne">
-                    </div>
-                    <div class="input">
-                        <label for="nivel">Nivel</label>
-                        <input type="number" name="nivel" id="nivel">
-                    </div>
-                    <button type="submit" id="adicionarPoke">Adicionar</button>
-                </form>
+                <div class="forca">
+                    <label for="forca">Força</label>
+                    <input type="number" name="forca" id="forca" min="0" placeholder="0">
+                </div>
+                <div class="resistencia">
+                    <label for="resistencia">Resistencia</label>
+                    <input type="number" name="resistencia" id="resistencia" min="0" placeholder="0">
+                </div>
+                <div class="velocidade">
+                    <label for="velocidade">Velocidade</label>
+                    <input type="number" name="velocidade" id="velocidade" min="0" placeholder="0">
+                </div>
+                <div class="peso">
+                    <label for="peso">Peso</label>
+                    <input type="number" name="peso" id="peso" min="0" step="0.1" placeholder="0,1">
+                </div>
+                <div class="shyne">
+                    <label for="shyne">Shyne</label>
+                    <input type="checkbox" name="shyne" id="shyne" value="true">
+                </div>
+                <div class="nivel">
+                    <label for="nivel">Nivel</label>
+                    <input type="number" name="nivel" id="nivel" min="1" placeholder="1">
+                </div>
+                <p>Preencha todos os campos</p>
+                <button id="adicionarPoke" onclick="criarJson()">Adicionar</button>
+                <button onclick="getPokemons()">get</button>
             </div>
         </div>
-    </main>
+    </div>
 </body>
 </html>
 
