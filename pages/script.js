@@ -55,19 +55,19 @@ function criarJson() {
 }
 
 function getPokemons(cols) {
-    fetch('http://127.0.0.1:5000/list_pokemons')
+    fetch('http://127.0.0.1:5000/list_pokemons?cols=' + cols.join(','))
         .then(response => response.json())  // Converte a resposta para JSON
         .then(data => {
-            if (data.error) {
-                console.log(data.error);  // Exibe erro se não encontrar pokémons
-            } else {
-                console.log(data);  // Exibe os pokémons retornados
-            }
+            console.log('Pokémons encontrados:', data);  // Exibe os pokémons encontrados
+            // Aqui você pode processar os dados (mostrar na tela, etc.)
         })
-        .catch(error => console.error('Erro na requisição:', error));  // Caso ocorra algum erro
+        .catch(error => {
+            console.error('Erro:', error);
+        });
 }
 
 // Exemplo de chamada passando as colunas
+
 getPokemons(['nome', 'forca', 'peso']);
 
 
