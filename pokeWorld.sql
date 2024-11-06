@@ -10,24 +10,24 @@ CREATE TABLE Regiao (
 );
 
 CREATE TABLE Pokemon (
-    nome VARCHAR(20),
-    Id_pokemon INT PRIMARY KEY,
-    forca INT,
-    resistencia INT,
-    velocidade INT,
-    peso FLOAT,
-    Shyne BOOLEAN,
-    nivel INT,
+    nome VARCHAR(20) NOT NULL,
+    Id_pokemon INT PRIMARY KEY auto_increment,
+    forca INT NOT NULL,
+    resistencia INT NOT NULL,
+    velocidade INT NOT NULL,
+    peso FLOAT NOT NULL,
+    Shyne BOOLEAN NOT NULL,
+    nivel INT DEFAULT 5,
     fk_Party_id_Party INT,
     selvagem BOOLEAN DEFAULT true
 );
 
 CREATE TABLE Treinador (
-    Nome VARCHAR(50),
-    data_nasc DATE,
-    genero VARCHAR(20),
-    CPF VARCHAR(20),
-    ID_treinador INT PRIMARY KEY
+    ID_treinador INT PRIMARY KEY auto_increment,
+    Nome VARCHAR(50) NOT NULL ,
+    data_nasc DATE NOT NULL,
+    genero VARCHAR(20) NOT NULL,
+    CPF VARCHAR(20) NOT NULL
 );
 
 CREATE TABLE movimentos (
