@@ -24,7 +24,7 @@ def add_pokemon():
 @app.route('/pokemon', methods=['GET'])
 def list_pokemons():
     # Obtém as colunas desejadas da requisição ou usa todas por padrão
-    cols = request.args.get('cols', 'nome, forca, resistencia, velocidade, peso, Shyne, nivel, fk_Party_id_Party, selvagem').split(',')
+    cols = request.args.get('cols', 'Id_pokemon,nome, forca, resistencia, velocidade, peso, Shyne, nivel, fk_Party_id_Party, selvagem').split(',')
     
     # Chama o método para listar os Pokémons
     pokemons = controller.list_pokemons(cols)
