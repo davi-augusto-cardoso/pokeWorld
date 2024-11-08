@@ -130,8 +130,6 @@ main {
     }
 }
 
-
-
 .pokemons {
     background-color: #e1e1e1;
     display: flex;
@@ -149,6 +147,7 @@ main {
 }
 
 .pokemon {
+    cursor: pointer;
     display: flex;
     background-color: rgb(255, 222, 0);
     height: 7vh;
@@ -160,6 +159,7 @@ main {
     h1 {
         padding-left: 1vi;
     }
+    
     button {
         border: none;
         background-color: rgb(255, 255, 255);
@@ -178,6 +178,14 @@ main {
     img:active{
         transform: scale(0.95);
     }
+}
+
+.pokemon:active{
+    transform:scale(0.98);
+}
+
+.pokemon:hover {
+    background-color: rgb(255, 255, 0);
 }
 
 .descricao {

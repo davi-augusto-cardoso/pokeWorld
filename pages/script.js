@@ -91,9 +91,10 @@ async function mostrarPokemons() {
 mostrarPokemons();
 
 function mostrarDescricao(id_pokemon) {
+    document.getElementById("descricao").style.display
     dictpokes.forEach((pokemon) => {
     if (pokemon["Id_pokemon"] == id_pokemon) {
-
+            document.get
         }
     })
 }
