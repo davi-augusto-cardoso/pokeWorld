@@ -80,7 +80,7 @@ async function mostrarPokemons() {
 
         dictpokes.forEach((pokemon) => {
             console.log(pokemon.nome);
-            card.innerHTML += '<div class="pokemon" id="'+ data + '"> <h1> ' + pokemon["nome"] + '</h1> </div>';
+            card.innerHTML += '<div class="pokemon" id= "pokemon" data-id="'+ pokemon["Id_pokemon"] +'"> <h1>' + pokemon["nome"] + '</h1> </div>';
         });
     console.log(dictpokes);
 }
