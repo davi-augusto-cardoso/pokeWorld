@@ -111,7 +111,6 @@ class CRUD:
             print(f"Erro de operacao: {error}")
             return -1
     
-    
     def __get_credentials(self):
         file_path = 'credentials.json'
         credentials = None

@@ -9,7 +9,6 @@ function mostraMenu() {
         document.getElementById("burger-bar").innerHTML = "<img src='src/burger-menu-svgrepo-com.svg' alt='Botão de menu'></img>";
         menu.style.display = "none";
     }
-
 }
 
 function criarJson() {
