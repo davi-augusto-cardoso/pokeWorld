@@ -121,9 +121,16 @@ main {
     border-radius: 0.5vi;
 }
 
-#pesquisa:focus {
-    outline: none;
+#adicionar {
+    display: flex;
+    align-items: center;
+    img {
+        padding: 0 0.5vi 0.1vi 0;
+
+    }
 }
+
+
 
 .pokemons {
     background-color: #e1e1e1;
@@ -147,9 +154,30 @@ main {
     height: 7vh;
     width: 97%;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     border-radius: 1vi;
     margin-bottom: 1vi;
+    h1 {
+        padding-left: 1vi;
+    }
+    button {
+        border: none;
+        background-color: rgb(255, 255, 255);
+        border-radius: 0.5vi;
+        cursor: pointer;
+        margin-right: 3%;
+        img {
+            padding-top: 0.2vi;
+            width: 100%;
+            height: 100%;
+        }
+    }
+    button:active {
+        transform: scale(0.92);
+    }
+    img:active{
+        transform: scale(0.95);
+    }
 }
 
 .descricao {
@@ -162,6 +190,9 @@ main {
     margin-top: 1vi;
     border-radius: 1vi;
     margin-right: 1vi;
+    h1 {
+        font-size: medium;
+    }
 }
 
 .fundoModal {

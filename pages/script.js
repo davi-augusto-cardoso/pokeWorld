@@ -74,13 +74,13 @@ function getPokemons(cols) {
 let dictpokes = [];
 async function mostrarPokemons() {
     dictpokes = JSON.parse(await getPokemons(["Id_pokemon","nome", "forca", "resistencia", "velocidade", "peso", "shyne", "nivel"]));
-    
+    console.log(typeof dictpokes)
     const card = document.getElementById("pokemons");
     
 
         dictpokes.forEach((pokemon) => {
             console.log(pokemon.nome);
-            card.innerHTML += '<div class="pokemon" id= "pokemon" data-id="'+ pokemon["Id_pokemon"] +'" onclick="mostrarDescricao('+pokemon["Id_pokemon"]+')"> <h1>' + pokemon["nome"] + '</h1> </div>';
+            card.innerHTML += '<div class="pokemon" id= "pokemon" data-id="'+ pokemon["Id_pokemon"] +'" onclick="mostrarDescricao('+pokemon["Id_pokemon"]+')"> <h1>' + pokemon["nome"] + '</h1> <button id="deletar"> <img src="src/trash-blank-svgrepo-com.svg" alt="deletar" id="imgDeletar"></button> </div>';
         });
     console.log("Lista pokes"+dictpokes);
 }
@@ -91,4 +91,3 @@ mostrarPokemons();
 function mostrarDescricao(id_pokemon) {
     dictpokes[id_pokemon]
 }
-
