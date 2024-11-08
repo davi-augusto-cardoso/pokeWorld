@@ -1,17 +1,24 @@
 <!DOCTYPE html>
 <html lang="PT-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="src/pokebola.ico">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/inputmask/5.0.6/inputmask.min.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Itim&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Nerko+One&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <script src="script.js" defer></script>
-    <title>Pokedex</title>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!-- Link para o ícone ou outras imagens, se necessário -->
+        <link rel="icon" type="image/x-icon" href="/pages/src/pokebola.ico">
+    
+        <!-- Links para fontes externas e máscaras de entrada -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/inputmask/5.0.6/inputmask.min.js"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Itim&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900&family=Nerko+One&display=swap" rel="stylesheet">
+        
+        <!-- Arquivos CSS e JavaScript internos -->
+        <link rel="stylesheet" href="/pages/styles.css">
+        <script src="/pages/script.js"></script>
+        
+        <title>Pokedex</title>
+    </head>
 <body>
     <header>
         <button id="burger-bar" class="burger-bar" onclick="mostraMenu()"><img src='src/burger-menu-svgrepo-com.svg' alt='Botão de menu'></button>
@@ -69,7 +76,7 @@
     <div class="fundoModal" style="display: none;">
         <div class="modalAdicionarPoke" id="modalAdicionarPoke">
             <div class="modalCima">
-                <button id="fecharModal"><img src="src/clear-svgrepo-com.svg" alt="Fechar"></button>
+                <button id="fecharModal"><img src="src/clear-svgrepo-com.svg" alt="Fechar" ></button>
                 <h1>Adicionar Pokemon</h1>
                 <div></div>
             </div>

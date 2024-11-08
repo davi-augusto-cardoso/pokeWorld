@@ -1,10 +1,21 @@
-from imports import Flask, request, jsonify, CORS
+from imports import Flask, request, jsonify, CORS,send_from_directory
 from controller import Controller  # Supondo que você tenha um controller para interagir com o banco
 
 controller = Controller()
 
 app = Flask(__name__)
 CORS(app)
+@app.route('/')
+def home():
+    return send_from_directory('pages', 'index.html')
+
+@app.route('/pages/<path:filename>')
+def static_files(filename):
+    return send_from_directory('pages', filename)
+
+@app.route('/pages/src/<path:filename>')
+def images(filename):
+    return send_from_directory('pages/src', filename)
 
 @app.route('/pokemon', methods=['POST'])
 def add_pokemon():
