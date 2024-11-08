@@ -11,8 +11,8 @@ function mostraMenu() {
         menu.style.display = "flex";
     } else {
         document.getElementById("burger-bar").innerHTML = "<img src='src/burger-menu-svgrepo-com.svg' alt='Botão de menu'></img>";
-        conteudo.style.width = "79vw";
-        descricao.style.width = "19vw";
+        conteudo.style.width = "73vw";
+        descricao.style.width = "25vw";
         menu.style.display = "none";
     }
 }
@@ -71,19 +71,24 @@ function getPokemons(cols) {
             return [];  // Retorna array vazio em caso de erro
         });
 }
-
+let dictpokes = [];
 async function mostrarPokemons() {
-    let dictpokes = JSON.parse(await getPokemons(["Id_pokemon","nome", "forca", "resistencia", "velocidade", "peso", "shyne", "nivel"]));
+    dictpokes = JSON.parse(await getPokemons(["Id_pokemon","nome", "forca", "resistencia", "velocidade", "peso", "shyne", "nivel"]));
     
     const card = document.getElementById("pokemons");
     
 
         dictpokes.forEach((pokemon) => {
             console.log(pokemon.nome);
-            card.innerHTML += '<div class="pokemon" id= "pokemon" data-id="'+ pokemon["Id_pokemon"] +'"> <h1>' + pokemon["nome"] + '</h1> </div>';
+            card.innerHTML += '<div class="pokemon" id= "pokemon" data-id="'+ pokemon["Id_pokemon"] +'" onclick="mostrarDescricao('+pokemon["Id_pokemon"]+')"> <h1>' + pokemon["nome"] + '</h1> </div>';
         });
-    console.log(dictpokes);
+    console.log("Lista pokes"+dictpokes);
 }
 
 // Chama a função para exibir os pokémons
 mostrarPokemons();
+
+function mostrarDescricao(id_pokemon) {
+    dictpokes[id_pokemon]
+}
+
