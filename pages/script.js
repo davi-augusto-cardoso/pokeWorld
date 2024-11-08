@@ -73,7 +73,7 @@ function getPokemons(cols) {
 }
 
 async function mostrarPokemons() {
-    let dictpokes = JSON.parse(await getPokemons(["nome", "forca", "resistencia", "velocidade", "peso", "shyne", "nivel"]));
+    let dictpokes = JSON.parse(await getPokemons(["Id_pokemon","nome", "forca", "resistencia", "velocidade", "peso", "shyne", "nivel"]));
     
     const card = document.getElementById("pokemons");
     
