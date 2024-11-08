@@ -38,7 +38,7 @@ function criarJson() {
     // console.log(values);
     let json =JSON.stringify(values)
     
-    fetch('http://127.0.0.1:5000/pokemon', {
+    fetch('pokemon', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -60,7 +60,7 @@ function criarJson() {
 }
 
 function getPokemons(cols) {
-    return fetch('http://127.0.0.1:5000/pokemon?cols=' + cols.join(','))  // Adicionado return
+    return fetch('pokemon?cols=' + cols.join(','))  // Adicionado return
         .then(response => response.json())  // Converte a resposta para JSON
         .then(data => {
             console.log('Pokémons encontrados:', data);  // Exibe os pokémons encontrados
@@ -73,11 +73,16 @@ function getPokemons(cols) {
 }
 let dictpokes = [];
 async function mostrarPokemons() {
-    dictpokes = JSON.parse(await getPokemons(["Id_pokemon","nome", "forca", "resistencia", "velocidade", "peso", "shyne", "nivel"]));
-    
-    const card = document.getElementById("pokemons");
-    
 
+
+    
+    dictpokes = JSON.parse(await getPokemons(["Id_pokemon","nome", "forca", "resistencia", "velocidade", "peso", "shyne", "nivel"]));
+    if(dictpokes < 0){
+        console.log("Nenhum pokemon encontrado");
+        return;
+    }
+    console.log(typeof( dictpokes));
+    const card = document.getElementById("pokemons");
         dictpokes.forEach((pokemon) => {
             console.log(pokemon.nome);
             card.innerHTML += '<div class="pokemon" id= "pokemon" data-id="'+ pokemon["Id_pokemon"] +'" onclick="mostrarDescricao('+pokemon["Id_pokemon"]+')"> <h1>' + pokemon["nome"] + '</h1> </div>';
@@ -89,6 +94,10 @@ async function mostrarPokemons() {
 mostrarPokemons();
 
 function mostrarDescricao(id_pokemon) {
-    dictpokes[id_pokemon]
+    dictpokes.forEach((pokemon) => {
+    if (pokemon["Id_pokemon"] == id_pokemon) {
+
+        }
+    })
 }
 
