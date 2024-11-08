@@ -20,9 +20,10 @@
     </header>
     <main>
         <div class="menu" id="menu">
-
+            <h1>Pokemons</h1>
+            <h1>Treinadores</h1>
         </div>
-        <div class="conteudo" id="conteudo" hidden>
+        <div class="conteudo" id="conteudo">
             <div class="acoes" id="acoes">
                 <input type="search" name="nome" id="pesquisa" placeholder="Digite o nome do pokemon">
                 <select name="tipo" id="tipo">
@@ -36,16 +37,20 @@
                     <option value="eletrico">Eletrico</option>
                     <option value="fada">Fada</option>
                 </select>
-            <button id="adicionar"><img src="src/plus-svgrepo-com.svg" alt="Adicionar">Adiconar</button>
+                <button id="adicionar"><img src="src/plus-svgrepo-com.svg" alt="Adicionar">Adiconar</button>
+            </div>
+            <div class="pokemons" id="pokemons">
+                <div class="pokemon" id="pokemon">
+                    <h1>Pokemon</h1>
+                </div>
             </div>
         </div>  
-        <div class="descricao" id="descricao" hidden>
+        <div class="descricao" id="descricao">
             <h1>Nome</h1>
-            <img src="src/pokebola.ico" alt="Imagem">
         </div>
     </main>
     <!-- Modal para adicionar pokemon -->
-    <div class="fundoModal" style="display: flex;">
+    <div class="fundoModal" style="display: none;">
         <div class="modalAdicionarPoke" id="modalAdicionarPoke">
             <div class="modalCima">
                 <button id="fecharModal"><img src="src/clear-svgrepo-com.svg" alt="Fechar"></button>

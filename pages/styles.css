@@ -11,7 +11,7 @@ body {
 }
 
 header {
-    background-color: rgb(248, 248, 248);
+    background-color: rgb(59, 76, 202);
     display: flex;
     justify-content: space-evenly;
     align-items: center;
@@ -56,11 +56,13 @@ main {
     display: flex;
     flex-direction: row;
     height: 100%;
+    width: 100%;
+    justify-content: space-between;
 }
 
 .menu {
     position: relative;
-    background-color: rgb(209, 209, 209);
+    background-color: rgb(59, 76, 202);
     width: 15vw;
     height: 99.7%;
     display: flex;
@@ -82,11 +84,84 @@ main {
 }
 
 .conteudo {
-    background-color:aqua ;
+    background-color:rgb(59, 76, 202) ;
     width: 60vw;
-    margin: 1vi 0 0 3vi;
+    margin: 1vi 3vi 0 3vi;
     border-radius: 1vi;
     box-shadow: -3px 3px rgba(0, 0, 0, 0.382);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.acoes {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: 4vi;
+}
+
+#pesquisa {
+    width: 12vw;
+    height: 3vh;
+    border: none;
+    border-radius: 0.5vi;
+}
+
+#pesquisa:focus {
+    outline: none;
+}
+
+#tipo {
+    width: 6vw;
+    height: 3vh;
+    border: none;
+    border-radius: 0.5vi;
+}
+
+#pesquisa:focus {
+    outline: none;
+}
+
+.pokemons {
+    background-color: rgb(255, 222, 0);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 95%;
+    height: 83.6%;
+    overflow-y: auto;
+    border-radius: 1vi;
+    padding: 1vi;
+}
+
+.pokemons::-webkit-scrollbar-button {
+    display: none;
+}
+
+.pokemon {
+    display: flex;
+    background-color: rgb(179, 161, 37);
+    height: 7vh;
+    width: 97%;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1vi;
+}
+
+.descricao {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(59, 76, 202);
+    width: 18vw;
+    height: 97.5%;
+    margin-top: 1vi;
+    border-radius: 1vi;
 }
 
 .fundoModal {

@@ -1,12 +1,15 @@
 botao = document.getElementById("burger-bar");
 menu = document.getElementById("menu");
+conteudo = document.getElementById("conteudo");
 
 function mostraMenu() {
     if (menu.style.display === "none") {
         document.getElementById("burger-bar").innerHTML = "<img src='src/burger-menu-right-svgrepo-com.svg' alt='Botão de menu'></img>";
+        conteudo.style.width = "60vw";
         menu.style.display = "flex";
     } else {
         document.getElementById("burger-bar").innerHTML = "<img src='src/burger-menu-svgrepo-com.svg' alt='Botão de menu'></img>";
+        conteudo.style.width = "80vw";
         menu.style.display = "none";
     }
 }
@@ -32,7 +35,7 @@ function criarJson() {
     // console.log(values);
     let json =JSON.stringify(values)
     
-    fetch('http://127.0.0.1:5000/add_pokemon', {
+    fetch('http://127.0.0.1:5000/pokemon', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -54,7 +57,7 @@ function criarJson() {
 }
 
 function getPokemons(cols) {
-    fetch('http://127.0.0.1:5000/list_pokemons?cols=' + cols.join(','))
+    fetch('http://127.0.0.1:5000/pokemon?cols=' + cols.join(','))
         .then(response => response.json())  // Converte a resposta para JSON
         .then(data => {
             console.log('Pokémons encontrados:', data);  // Exibe os pokémons encontrados
@@ -65,10 +68,15 @@ function getPokemons(cols) {
         });
 }
 
-// Exemplo de chamada passando as colunas
+console.log(getPokemons(["nome", "forca", "resistencia", "velocidade", "peso", "shyne", "nivel"]));
 
-getPokemons(['nome', 'forca', 'peso']);
+// listaPoke = document.getElementById("pokemons");
+// function mostrarPokemons() {
+//     getPokemons([nome]);
+//     listaPoke.innerHTML = "a";
+// }
+
+// mostrarPokemons();
 
 
-// http://127.0.0.1:5000
-// @app.route('/add_pokemon', methods=['POST'])
+// listaPoke.innerHTML = getPokemons([nome]);
