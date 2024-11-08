@@ -1,15 +1,18 @@
 botao = document.getElementById("burger-bar");
 menu = document.getElementById("menu");
 conteudo = document.getElementById("conteudo");
+descricao = document.getElementById("descricao");
 
 function mostraMenu() {
     if (menu.style.display === "none") {
         document.getElementById("burger-bar").innerHTML = "<img src='src/burger-menu-right-svgrepo-com.svg' alt='Botão de menu'></img>";
         conteudo.style.width = "60vw";
+        descricao.style.width = "18vw";
         menu.style.display = "flex";
     } else {
         document.getElementById("burger-bar").innerHTML = "<img src='src/burger-menu-svgrepo-com.svg' alt='Botão de menu'></img>";
-        conteudo.style.width = "80vw";
+        conteudo.style.width = "79vw";
+        descricao.style.width = "19vw";
         menu.style.display = "none";
     }
 }
@@ -57,26 +60,30 @@ function criarJson() {
 }
 
 function getPokemons(cols) {
-    fetch('http://127.0.0.1:5000/pokemon?cols=' + cols.join(','))
+    return fetch('http://127.0.0.1:5000/pokemon?cols=' + cols.join(','))  // Adicionado return
         .then(response => response.json())  // Converte a resposta para JSON
         .then(data => {
             console.log('Pokémons encontrados:', data);  // Exibe os pokémons encontrados
-            // Aqui você pode processar os dados (mostrar na tela, etc.)
+            return data;  // Retorna os dados para uso posterior
         })
         .catch(error => {
             console.error('Erro:', error);
+            return [];  // Retorna array vazio em caso de erro
         });
 }
 
-console.log(getPokemons(["nome", "forca", "resistencia", "velocidade", "peso", "shyne", "nivel"]));
+async function mostrarPokemons() {
+    let dictpokes = JSON.parse(await getPokemons(["nome", "forca", "resistencia", "velocidade", "peso", "shyne", "nivel"]));
+    
+    const card = document.getElementById("pokemons");
+    
 
-// listaPoke = document.getElementById("pokemons");
-// function mostrarPokemons() {
-//     getPokemons([nome]);
-//     listaPoke.innerHTML = "a";
-// }
+        dictpokes.forEach((pokemon) => {
+            console.log(pokemon.nome);
+            card.innerHTML += '<div class="pokemon" id="'+ data + '"> <h1> ' + pokemon["nome"] + '</h1> </div>';
+        });
+    console.log(dictpokes);
+}
 
-// mostrarPokemons();
-
-
-// listaPoke.innerHTML = getPokemons([nome]);
+// Chama a função para exibir os pokémons
+mostrarPokemons();
