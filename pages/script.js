@@ -2,7 +2,6 @@ botao = document.getElementById("burger-bar");
 menu = document.getElementById("menu");
 conteudo = document.getElementById("conteudo");
 descricao = document.getElementById("descricao");
-mostrarPokemons();
 
 function mostraMenu() {
     if (menu.style.display === "none") {
@@ -62,63 +61,84 @@ function criarPokemon() {
 
 }
 
-function getPokemons(cols) {
-    return fetch('pokemon?cols=' + cols.join(','))  // Adicionado return
-        .then(response => response.json())  // Converte a resposta para JSON
+async function getPokemons(cols) {
+    return fetch('pokemon?cols=' + cols.join(','))  
+        .then(response => response.json())  
         .then(data => {
-            console.log('Pokémons encontrados:', data);  // Exibe os pokémons encontrados
-            return data;  // Retorna os dados para uso posterior
+            console.log('Pokémons encontrados:', data);
+            return data;
         })
         .catch(error => {
             console.error('Erro:', error);
-            return [];  // Retorna array vazio em caso de erro
+            return [];
         });
 }
-function getTreinadores(cols){
-    fetch('treinador?cols=' + cols.join(','))  // Adicionado return
-    .then(response => response.json())  // Converte a resposta para JSON
-    .then(data => {
-        console.log('treinadores encontrados:', data);  // Exibe os pokémons encontrados
-        return data;  // Retorna os dados para uso posterior
-    })
-    .catch(error => {
-        console.error('Erro:', error);
-        return [];  // Retorna array vazio em caso de erro
-    });
+
+async function getTreinadores(cols){
+    return fetch('treinador?cols=' + cols.join(','))  
+        .then(response => response.json())  
+        .then(data => {
+            console.log('Treinadores encontrados:', data); 
+            return data;
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+            return [];
+        });
 }
-
-function getParty(fkparty){
-    fetch(`pokemon/`)
-
+function getParty(idTreinador){
+    fetch(`party/${idTreinador}`)
+    .then(resp => resp.json())
+    .then(data => {
+        return data;
+    }) // Adicionado return
 }
 
 let dictpokes = [];
 async function mostrarPokemons() {
-
-    dictpokes = JSON.parse(await getPokemons(["Id_pokemon","nome", "forca", "resistencia", "velocidade", "peso", "shyne", "nivel", "fk_party_id_Party"]));
-    if(dictpokes < 0){
-        console.log("Nenhum pokemon encontrado");
+    let botaoAdicionar = document.getElementById("adicionar");
+    botaoAdicionar.onclick = mostraModalpoke;
+    dictpokes = JSON.parse(await getPokemons(["Id_pokemon", "nome", "forca", "resistencia", "velocidade", "peso", "shyne", "nivel", "fk_party_id_Party"]));
+    
+    if (dictpokes.length === 0) {
+        console.log("Nenhum Pokémon encontrado");
         return;
     }
+
     const card = document.getElementById("pokemons");
-    card.innerHTML = ""
-        dictpokes.forEach((pokemon) => {
-            console.log(pokemon.nome);
-            card.innerHTML += `<div class="pokemon" data-id=${pokemon['Id_pokemon']} onclick="mostrarDescricao(${pokemon["Id_pokemon"]})"> <h1> ${pokemon["nome"]}</h1> <button class=Botaodeletar onclick=botaoDeletar(${pokemon["Id_pokemon"]})><img src="pages/src/trash-blank-svgrepo-com.svg" alt="deletar" id="imgDeletar"></button> </div>`
-})
+    card.innerHTML = "";  // Limpa o conteúdo atual
+    dictpokes.forEach((pokemon) => {
+        console.log(pokemon.nome);
+        card.innerHTML += `<div class="pokemon" data-id=${pokemon['Id_pokemon']} onclick="mostrarDescricaoPokemon(${pokemon["Id_pokemon"]})">
+                              <h1>${pokemon["nome"]}</h1>
+                              <button class="Botaodeletar" onclick="botaoDeletar(${pokemon["Id_pokemon"]})">
+                                  <img src="pages/src/trash-blank-svgrepo-com.svg" alt="deletar" id="imgDeletar">
+                              </button>
+                           </div>`;
+    });
 }
 
 let listTreinadores = [];
-async function mostraTreinadores(){
-     listTreinadores = JSON.parse(getTreinadores(['nome, idade, experiencia, ID_treinador']));
-    if(listTreinadores < 0){
+    
+async function mostraTreinadores() {
+    botaoAdicionar = document.getElementById("adicionar").onclick = mostraModaltreinador;
+    listTreinadores = JSON.parse(await getTreinadores(["ID_treinador","nome",]));
+    
+    if (listTreinadores.length == 0) {
         console.log("Nenhum treinador encontrado");
         return;
     }
+
     const card = document.getElementById("pokemons");
-    card.innerHTML = ""
+    card.innerHTML = "";
     listTreinadores.forEach((treinador) => {
-        card.innerHTML += `<div class="pokemon" data-id=${treinador['ID_treinador']} onclick="mostrarDescricaoTreinador(${treinador["ID_treinador"]})"> <h1> ${treinador["nome"]}</h1> <button class=Botaodeletar onclick=botaoDeletarTreinador(${treinador["ID_treinador"]})><img src="pages/src/trash-blank-svgrepo-com.svg" alt="deletar" id="imgDeletar"></button> </div>`})
+        card.innerHTML += `<div class="pokemon" data-id=${treinador['ID_treinador']} onclick="mostrarDescricaoTreinador(${treinador["ID_treinador"]})">
+                               <h1>${treinador["nome"]}</h1>
+                               <button class="Botaodeletar" onclick="botaoDeletarTreinador(${treinador["ID_treinador"]})">
+                                   <img src="pages/src/trash-blank-svgrepo-com.svg" alt="deletar" id="imgDeletar">
+                               </button>
+                           </div>`;
+    });
 }
 
 function obterParty(ID_treinador){
@@ -160,7 +180,7 @@ function mostrarDescricaoTreinador(ID_treinador) {
 // Chama a função para exibir os pokémons
 
 
-function mostrarDescricao(id_pokemon) {
+function mostrarDescricaoPokemon(id_pokemon) {
     let pkemon;
     
     dictpokes.forEach((pokemon) => {
@@ -187,16 +207,21 @@ function botaoDeletar(id){
     })
 }
 
-function mostraModal(){
-    if (document.getElementById("fundoModal").style.display == "none") {
-        document.getElementById("fundoModal").style.display = "flex";
+function mostraModalpoke(){
+    if (document.getElementById("fundoModalpoke").style.display == "none") {
+        document.getElementById("fundoModalpoke").style.display = "flex";
     } else {
-        document.getElementById("fundoModal").style.display = "none";
+        document.getElementById("fundoModalpoke").style.display = "none";
     }
 }
 
-
-
+function mostraModaltreinador(){
+    if (document.getElementById("fundoModaltreiner").style.display == "none") {
+        document.getElementById("fundoModaltreiner").style.display = "flex";
+    } else {
+        document.getElementById("fundoModaltreiner").style.display = "none";
+    }
+}
 
 function editarPokemon(){
     nome = document.getElementById("discNome").value;
@@ -217,23 +242,14 @@ function editarPokemon(){
     })
 }
 
-
-
-const abaPokemon = document.getElementById("abaPokemon")
-const abaTreinador = document.getElementById("abaTreinador")
-abaPokemon.addEventListener("click", mostrarPokemons)
-
 function criaTreinador(){
-    let values = {nome: "", idade: 0, experiencia: 0};
-    if (document.getElementById("nome").value == "" || document.getElementById("idade").value == "" || document.getElementById("experiencia").value == "") {
-        alert("Favor preencher todos os campos");
-        return;
-    } else {
-        values.nome = document.getElementById("nome").value;
-        values.idade = parseInt(document.getElementById("idade").value);
-        values.experiencia = parseInt(document.getElementById("experiencia").value);
-    }
-    // console.log(values);
+    let values = {nome: "", idade: 0,data_nasc:"", genero:"",cpf:""};
+
+        values.nome = document.getElementById("nomeTreinador").value;
+        values.data_nasc = document.getElementById("data_nascTreinador").value;
+        values.cpf = document.getElementById("cpfTreinador").value;
+        values.genero = document.getElementById("generoTreinador").value;
+
     let json =JSON.stringify(values)
     
     fetch('treinador', {
@@ -241,7 +257,7 @@ function criaTreinador(){
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(values) // Converte o objeto para uma string JSON
+        body: json // Converte o objeto para uma string JSON
     })
     .then(response => {
         if (!response.ok) {

@@ -66,10 +66,10 @@
         </div>
     </main>
     <!-- Modal para adicionar pokemon -->
-    <div class="fundoModal" id="fundoModal" style="display: none;">
+    <div class="fundoModal" id="fundoModalpoke" style="display: none;">
         <div class="modalAdicionarPoke" id="modalAdicionarPoke">
             <div class="modalCima">
-                <button id="fecharModal" onclick="mostraModal()" ><img src="pages/src/clear-svgrepo-com.svg" alt="Fechar" ></button>
+                <button id="fecharModalpoke" onclick="mostraModalpoke()" ><img src="pages/src/clear-svgrepo-com.svg" alt="Fechar" ></button>
                 <h1>Adicionar Pokemon</h1>
                 <div></div>
             </div>
@@ -107,32 +107,32 @@
             </div>
         </div>
     </div>
-    <div class="fundoModal" id="fundoModal" style="display: flex;">
+    <div class="fundoModal" id="fundoModaltreiner" style="display: none;">
         <div class="modalAdicionarTreiandor" id="modalAdicionarTreinador">
             <div class="modalCima">
-                <button id="fecharModal" onclick="mostraModal()" ><img src="pages/src/clear-svgrepo-com.svg" alt="Fechar" ></button>
+                <button id="fecharModaltreiner" onclick="mostraModaltreinador()" ><img src="pages/src/clear-svgrepo-com.svg" alt="Fechar" ></button>
                 <h1>Adicionar Treinador</h1>
                 <div></div>
             </div>
             <div class="conteudoModal">
                 <div class="nome">
                     <label for="nome">Nome</label>
-                    <input type="text" name="nome" id="nome" placeholder="Ex:Ashe">
+                    <input type="text" name="nome" id="nomeTreinador" placeholder="Ex:Ashe">
                 </div>
                 <div class="data">
                     <label for="data">Data de Nascimento</label>
-                    <input type="date" name="data" id="data">
+                    <input type="date" name="data" id="data_nascTreinador">
                 </div>
                 <div class="genero">
                     <label for="genero">Genero</label>
-                    <input type="text" name="genero" id="genero" placeholder="Ex:Masculino">
+                    <input type="text" name="genero" id="generoTreinador" placeholder="Ex:Masculino">
                 </div>
                 <div class="cpf">
                     <label for="cpf">Cpf</label>
-                    <input type="text" name="cpf" id="cpf" min="11" placeholder="Ex:123.456.789-00">
+                    <input type="text" name="cpf" id="cpfTreinador" min="11" placeholder="Ex:123.456.789-00">
                 </div>
                 <p>Preencha todos os campos</p>
-                <button id="adicionarPoke" onclick="criarPokemon()">Adicionar</button>
+                <button id="adicionarTreiner" onclick="criaTreinador()">Adicionar</button>
             </div>
         </div>
     </div>
