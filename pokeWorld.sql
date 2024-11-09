@@ -17,10 +17,14 @@ CREATE TABLE Pokemon (
     velocidade INT NOT NULL,
     peso FLOAT NOT NULL,
     Shyne BOOLEAN NOT NULL,
-    nivel INT DEFAULT 5,
+    nivel INT DEFAULT 5, 
     fk_Party_id_Party INT,
     selvagem BOOLEAN DEFAULT true
 );
+
+
+
+
 
 CREATE TABLE Treinador (
     ID_treinador INT PRIMARY KEY auto_increment,

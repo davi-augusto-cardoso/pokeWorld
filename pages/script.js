@@ -101,7 +101,7 @@ function getParty(idTreinador){
 let dictpokes = [];
 async function mostrarPokemons() {
     document.getElementById("adicionar").onclick = mostraModalpoke;
-    dictpokes = JSON.parse(await getPokemons(["Id_pokemon", "nome", "forca", "resistencia", "velocidade", "peso", "nivel", "fk_party_id_Party"]));
+    dictpokes = JSON.parse(await getPokemons(["Id_pokemon", "nome", "forca", "resistencia", "velocidade", "peso", "shyne", "nivel", "fk_party_id_Party"]));
     
     if (dictpokes < 0) {
         console.log("Nenhum Pokémon encontrado");
@@ -127,8 +127,7 @@ async function mostraTreinadores() {
     document.getElementById("adicionar").onclick = mostraModaltreinador;
     listTreinadores = JSON.parse(await getTreinadores(["ID_treinador","Nome"])); 
 
-    console.log(typeof(listTreinadores));
-    if (listTreinadores.length < 0) {
+    if (listTreinadores < 0) {
         console.log("Nenhum treinador encontrado");
         return;
     }
@@ -156,6 +155,8 @@ function obterParty(ID_treinador){
 }
 
 function mostraPokemonsParty(id){
+    document.getElementById("descricaoPokemon").style.display = "flex";
+    document.getElementById("descricaoTreinador").style.display = "none";
     let party = obterParty(id)
     const card = document.getElementById("pokemons");
     card.innerHTML = ""
@@ -172,17 +173,11 @@ function mostrarDescricaoTreinador(ID_treinador) {
         }
     })
 
-    document.getElementById("discNome").display = "none";
-    document.getElementById("discforca").display = "none";
-    document.getElementById("discresistencia").display = "none";
-    document.getElementById("discvelocidade").display = "none";
-    document.getElementById("discpeso").display = "none";
-    document.getElementById("discshyne").display = "none";
-    document.getElementById("discnivel").display = "none";
 
+    document.getElementById("descricaoPokemon").style.display = "none";
+    document.getElementById("descricaoTreinador").style.display = "flex";
 
-
-    document.getElementById("discNome").value = treinador["nome"];
+    document.getElementById("discNome").value = treinador["Nome"];
     document.getElementById("data_nascTreinador").value = treinador["data_nasc"];
     document.getElementById("generoTreinador").value = treinador["genero"];
     document.getElementById("cpfTreinador").value = treinador["cpf"];
@@ -208,6 +203,7 @@ async function mostrarDescricaoPokemon(id_pokemon) {
     document.getElementById("discresistencia").value = pkemon["resistencia"];
     document.getElementById("discvelocidade").value = pkemon["velocidade"];
     document.getElementById("discpeso").value = pkemon["peso"];
+    document.getElementById("discshyne").checked = pkemon["shyne"];
     document.getElementById("discnivel").value = pkemon["nivel"];
     document.getElementById("editarPokemon").dataset.id = id_pokemon;
 }
@@ -243,7 +239,7 @@ async function editarPokemon(){
     const velocidade = document.getElementById("discvelocidade").value;
     const peso = document.getElementById("discpeso").value;
     const nivel = document.getElementById("discnivel").value;
-    const id = document.getElementById("editar").dataset.id;
+    const id = document.getElementById("editarPokemon").dataset.id;
     
     fetch(`pokemon/${id}`, {
         method: 'PUT',
@@ -290,7 +286,7 @@ function editarTreinador(){
 }
 
 function criaTreinador(){
-    let values = {nome: "", idade: 0,data_nasc:"", genero:"",cpf:""};
+    let values = {nome: "",data_nasc:"", genero:"",cpf:""};
 
         values.nome = document.getElementById("nomeTreinador").value;
         values.data_nasc = document.getElementById("data_nascTreinador").value;
