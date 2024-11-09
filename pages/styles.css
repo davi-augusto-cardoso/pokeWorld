@@ -191,11 +191,6 @@ main {
 .Botaodeletar:active{
     transform: scale(0.95);
 }
-
-.pokemon:active{
-    transform:scale(0.98);
-}
-
 .pokemon:hover {
     background-color: rgb(255, 255, 0);
 }
@@ -230,7 +225,7 @@ main {
 
 }
 
-.modalAdicionarPoke {
+.modalAdicionarPoke, .modalAdicionarTreiandor {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
