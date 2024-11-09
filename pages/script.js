@@ -98,11 +98,10 @@ function getParty(idTreinador){
 
 let dictpokes = [];
 async function mostrarPokemons() {
-    let botaoAdicionar = document.getElementById("adicionar");
-    botaoAdicionar.onclick = mostraModalpoke;
-    dictpokes = JSON.parse(getPokemons(["Id_pokemon", "nome", "forca", "resistencia", "velocidade", "peso", "shyne", "nivel", "fk_party_id_Party"]));
+    document.getElementById("adicionar").onclick = mostraModalpoke;
+    dictpokes = JSON.parse(await getPokemons(["Id_pokemon", "nome", "forca", "resistencia", "velocidade", "peso", "shyne", "nivel", "fk_party_id_Party"]));
     
-    if (dictpokes.length === 0) {
+    if (dictpokes < 0) {
         console.log("Nenhum Pokémon encontrado");
         return;
     }
@@ -239,14 +238,14 @@ function mostraModaltreinador(){
 }
 
 function editarPokemon(){
-    nome = document.getElementById("discNome").value;
-    forca = document.getElementById("discforca").value;
-    resistencia = document.getElementById("discresistencia").value;
-    velocidade = document.getElementById("discvelocidade").value;
-    peso = document.getElementById("discpeso").value;
-    shyne = document.getElementById("discshyne").value;
-    nivel = document.getElementById("discnivel").value;
-    id = document.getElementById("editar").dataset.id;
+    const nome = document.getElementById("discNome").value;
+    const forca = document.getElementById("discforca").value;
+    const resistencia = document.getElementById("discresistencia").value;
+    const velocidade = document.getElementById("discvelocidade").value;
+    const peso = document.getElementById("discpeso").value;
+    const shyne = document.getElementById("discshyne").value;
+    const nivel = document.getElementById("discnivel").value;
+    const id = document.getElementById("editar").dataset.id;
     
     fetch(`pokemon/${id}`, {
         method: 'PUT',
@@ -255,6 +254,27 @@ function editarPokemon(){
         },
         body: JSON.stringify({nome: nome, forca: forca, resistencia: resistencia, velocidade: velocidade, peso: peso, shyne: shyne, nivel: nivel})
     })
+}
+
+function editarTreinador(){
+
+    nome = document.getElementById("discNomeTreinador").value
+    data_nasc= document.getElementById("discdata_nascTreinador").value
+    genero=document.getElementById("discgeneroTreinador").value
+    cpf = document.getElementById("cpfTreinador").value;
+
+    fetch(`treinador/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({nome: nome, data_nasc: data_nasc, genero: genero, cpf: cpf})
+    }).then(resp => resp.json())
+    .then(data => {
+        console.log(data)
+    })
+
+
 }
 
 function criaTreinador(){
