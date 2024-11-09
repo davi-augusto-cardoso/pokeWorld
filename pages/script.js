@@ -72,6 +72,8 @@ async function getPokemons(cols) {
             console.error('Erro:', error);
             return [];
         });
+
+        
 }
 
 async function getTreinadores(cols){
@@ -99,7 +101,7 @@ function getParty(idTreinador){
 let dictpokes = [];
 async function mostrarPokemons() {
     document.getElementById("adicionar").onclick = mostraModalpoke;
-    dictpokes = JSON.parse(await getPokemons(["Id_pokemon", "nome", "forca", "resistencia", "velocidade", "peso", "shyne", "nivel", "fk_party_id_Party"]));
+    dictpokes = JSON.parse(await getPokemons(["Id_pokemon", "nome", "forca", "resistencia", "velocidade", "peso", "nivel", "fk_party_id_Party"]));
     
     if (dictpokes < 0) {
         console.log("Nenhum Pokémon encontrado");
@@ -189,12 +191,9 @@ function mostrarDescricaoTreinador(ID_treinador) {
     mostraPokemonsParty(ID_treinador)
 }
 
-
-
 // Chama a função para exibir os pokémons
 
-
-function mostrarDescricaoPokemon(id_pokemon) {
+async function mostrarDescricaoPokemon(id_pokemon) {
     let pkemon;
     
     dictpokes.forEach((pokemon) => {
@@ -209,9 +208,8 @@ function mostrarDescricaoPokemon(id_pokemon) {
     document.getElementById("discresistencia").value = pkemon["resistencia"];
     document.getElementById("discvelocidade").value = pkemon["velocidade"];
     document.getElementById("discpeso").value = pkemon["peso"];
-    document.getElementById("discshyne").value = pkemon["shyne"];
     document.getElementById("discnivel").value = pkemon["nivel"];
-    document.getElementById("editar").dataset.id = id_pokemon;
+    document.getElementById("editarPokemon").dataset.id = id_pokemon;
 }
 
 function botaoDeletar(id){
@@ -237,13 +235,13 @@ function mostraModaltreinador(){
     }
 }
 
-function editarPokemon(){
+async function editarPokemon(){
+
     const nome = document.getElementById("discNome").value;
     const forca = document.getElementById("discforca").value;
     const resistencia = document.getElementById("discresistencia").value;
     const velocidade = document.getElementById("discvelocidade").value;
     const peso = document.getElementById("discpeso").value;
-    const shyne = document.getElementById("discshyne").value;
     const nivel = document.getElementById("discnivel").value;
     const id = document.getElementById("editar").dataset.id;
     
@@ -252,8 +250,22 @@ function editarPokemon(){
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({nome: nome, forca: forca, resistencia: resistencia, velocidade: velocidade, peso: peso, shyne: shyne, nivel: nivel})
+        body: JSON.stringify({
+            nome: nome,
+            forca: forca,
+            resistencia: resistencia,
+            velocidade: velocidade,
+            peso: peso,
+            nivel: nivel
+        })
     })
+    .then(response => response.json())
+    .then(data => {
+        console.log("Pokémon atualizado com sucesso:", data);
+    })
+    .catch(error => {
+        console.error("Erro ao atualizar Pokémon:", error);
+    });
 }
 
 function editarTreinador(){
