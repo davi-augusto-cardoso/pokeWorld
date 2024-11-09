@@ -170,21 +170,14 @@ function mostrarDescricaoTreinador(ID_treinador) {
         }
     })
 
-    document.getElementById("discNome").display = "none";
-    document.getElementById("discforca").display = "none";
-    document.getElementById("discresistencia").display = "none";
-    document.getElementById("discvelocidade").display = "none";
-    document.getElementById("discpeso").display = "none";
-    document.getElementById("discshyne").display = "none";
-    document.getElementById("discnivel").display = "none";
-
-
+    document.getElementById("descricaoTreinador").style.display = "flex";
+    document.getElementById("descricaoPokemon").style.display = "none";
 
     document.getElementById("discNome").value = treinador["nome"];
     document.getElementById("data_nascTreinador").value = treinador["data_nasc"];
     document.getElementById("generoTreinador").value = treinador["genero"];
     document.getElementById("cpfTreinador").value = treinador["cpf"];
-    document.getElementById("editar").dataset.id = ID_treinador;
+    document.getElementById("editarTreinador").dataset.id = ID_treinador;
 
     mostraPokemonsParty(ID_treinador)
 }
@@ -196,6 +189,8 @@ function mostrarDescricaoTreinador(ID_treinador) {
 
 function mostrarDescricaoPokemon(id_pokemon) {
     let pkemon;
+    document.getElementById("descricaoTreinador").style.display = "none";
+    document.getElementById("descricaoPokemon").style.display = "flex";
     
     dictpokes.forEach((pokemon) => {
     if(pokemon["Id_pokemon"] == id_pokemon) {
@@ -211,7 +206,7 @@ function mostrarDescricaoPokemon(id_pokemon) {
     document.getElementById("discpeso").value = pkemon["peso"];
     document.getElementById("discshyne").value = pkemon["shyne"];
     document.getElementById("discnivel").value = pkemon["nivel"];
-    document.getElementById("editar").dataset.id = id_pokemon;
+    document.getElementById("editarPokemon").dataset.id = id_pokemon;
 }
 
 function botaoDeletar(id){
@@ -245,7 +240,7 @@ function editarPokemon(){
     const peso = document.getElementById("discpeso").value;
     const shyne = document.getElementById("discshyne").value;
     const nivel = document.getElementById("discnivel").value;
-    const id = document.getElementById("editar").dataset.id;
+    const id = document.getElementById("editarPokemon").dataset.id;
     
     fetch(`pokemon/${id}`, {
         method: 'PUT',
@@ -262,6 +257,7 @@ function editarTreinador(){
     data_nasc= document.getElementById("discdata_nascTreinador").value
     genero=document.getElementById("discgeneroTreinador").value
     cpf = document.getElementById("cpfTreinador").value;
+    id = document.getElementById("editarTreinador").dataset.id
 
     fetch(`treinador/${id}`, {
         method: 'PUT',
@@ -278,7 +274,7 @@ function editarTreinador(){
 }
 
 function criaTreinador(){
-    let values = {nome: "", idade: 0,data_nasc:"", genero:"",cpf:""};
+    let values = {nome: "",data_nasc:"", genero:"",cpf:""};
 
         values.nome = document.getElementById("nomeTreinador").value;
         values.data_nasc = document.getElementById("data_nascTreinador").value;
@@ -286,7 +282,7 @@ function criaTreinador(){
         values.genero = document.getElementById("generoTreinador").value;
 
     let json =JSON.stringify(values)
-    
+    console.log(json)
     fetch('treinador', {
         method: 'POST',
         headers: {
