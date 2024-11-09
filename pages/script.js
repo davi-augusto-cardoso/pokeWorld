@@ -86,6 +86,8 @@ async function getTreinadores(cols){
             return [];
         });
 }
+
+
 function getParty(idTreinador){
     fetch(`party/${idTreinador}`)
     .then(resp => resp.json())
@@ -98,7 +100,7 @@ let dictpokes = [];
 async function mostrarPokemons() {
     let botaoAdicionar = document.getElementById("adicionar");
     botaoAdicionar.onclick = mostraModalpoke;
-    dictpokes = JSON.parse(await getPokemons(["Id_pokemon", "nome", "forca", "resistencia", "velocidade", "peso", "shyne", "nivel", "fk_party_id_Party"]));
+    dictpokes = JSON.parse(getPokemons(["Id_pokemon", "nome", "forca", "resistencia", "velocidade", "peso", "shyne", "nivel", "fk_party_id_Party"]));
     
     if (dictpokes.length === 0) {
         console.log("Nenhum Pokémon encontrado");
@@ -119,12 +121,13 @@ async function mostrarPokemons() {
 }
 
 let listTreinadores = [];
-    
+
 async function mostraTreinadores() {
-    botaoAdicionar = document.getElementById("adicionar").onclick = mostraModaltreinador;
-    listTreinadores = JSON.parse(await getTreinadores(["ID_treinador","nome",]));
-    
-    if (listTreinadores.length == 0) {
+    document.getElementById("adicionar").onclick = mostraModaltreinador;
+    listTreinadores = JSON.parse(await getTreinadores(["ID_treinador","Nome"])); 
+
+    console.log(typeof(listTreinadores));
+    if (listTreinadores.length < 0) {
         console.log("Nenhum treinador encontrado");
         return;
     }
@@ -133,7 +136,7 @@ async function mostraTreinadores() {
     card.innerHTML = "";
     listTreinadores.forEach((treinador) => {
         card.innerHTML += `<div class="pokemon" data-id=${treinador['ID_treinador']} onclick="mostrarDescricaoTreinador(${treinador["ID_treinador"]})">
-                               <h1>${treinador["nome"]}</h1>
+                               <h1>${treinador["Nome"]}</h1>
                                <button class="Botaodeletar" onclick="botaoDeletarTreinador(${treinador["ID_treinador"]})">
                                    <img src="pages/src/trash-blank-svgrepo-com.svg" alt="deletar" id="imgDeletar">
                                </button>
@@ -167,9 +170,21 @@ function mostrarDescricaoTreinador(ID_treinador) {
             treinador = treinador;
         }
     })
+
+    document.getElementById("discNome").display = "none";
+    document.getElementById("discforca").display = "none";
+    document.getElementById("discresistencia").display = "none";
+    document.getElementById("discvelocidade").display = "none";
+    document.getElementById("discpeso").display = "none";
+    document.getElementById("discshyne").display = "none";
+    document.getElementById("discnivel").display = "none";
+
+
+
     document.getElementById("discNome").value = treinador["nome"];
-    document.getElementById("discIdade").value = treinador["idade"];
-    document.getElementById("discExperiencia").value = treinador["experiencia"];
+    document.getElementById("data_nascTreinador").value = treinador["data_nasc"];
+    document.getElementById("generoTreinador").value = treinador["genero"];
+    document.getElementById("cpfTreinador").value = treinador["cpf"];
     document.getElementById("editar").dataset.id = ID_treinador;
 
     mostraPokemonsParty(ID_treinador)

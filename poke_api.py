@@ -71,7 +71,7 @@ def add_treinador():
 
 @app.route('/treinador', methods=['GET'])
 def list_treinadores():
-    cols = request.args.get('cols', 'nome, idade, experiencia, fk_party_id').split(',')
+    cols = request.args.get('cols', 'nome, data_nasc, genero, CPF').split(',')
     treinadores = controller.list_trainer(cols)  # Corrigido o nome da função para `list_trainer`
 
     if treinadores:
