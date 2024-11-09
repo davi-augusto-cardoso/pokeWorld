@@ -111,5 +111,51 @@ def list_party(id_treinador):
     else:
         return jsonify({'error': 'Nenhuma party encontrada'}), 404
 
+
+@app.route('/shyne', methods=['POST'])
+def add_shyne():
+    if not request.json or 'pokemon_id' not in request.json or 'is_shiny' not in request.json:
+        return jsonify({'error': 'Dados inválidos. É necessário enviar pokemon_id e is_shiny no formato JSON'}), 400
+
+    pokemon_id = request.json['pokemon_id']
+    is_shiny = request.json['is_shiny']
+    
+    result = controller.add_shyne(pokemon_id, is_shiny)
+    if result == 1:
+        return jsonify({'message': f'Status shiny para o Pokémon com ID {pokemon_id} adicionado com sucesso!'}), 201
+    else:
+        return jsonify({'error': 'Erro ao adicionar status shiny'}), 500
+
+# Rota para obter o status shiny de um Pokémon
+@app.route('/shyne/<int:pokemon_id>', methods=['GET'])
+def get_shyne(pokemon_id):
+    result = controller.get_shyne(pokemon_id)
+    if result:
+        return jsonify(result), 200
+    else:
+        return jsonify({'error': f'Status shiny para o Pokémon com ID {pokemon_id} não encontrado'}), 404
+
+# Rota para atualizar o status shiny de um Pokémon
+@app.route('/shyne/<int:pokemon_id>', methods=['PUT'])
+def update_shyne(pokemon_id):
+    if not request.json or 'is_shiny' not in request.json:
+        return jsonify({'error': 'Dados inválidos. É necessário enviar is_shiny no formato JSON'}), 400
+
+    is_shiny = request.json['is_shiny']
+    result = controller.update_shyne(pokemon_id, is_shiny)
+    
+    if result == 1:
+        return jsonify({'message': f'Status shiny para o Pokémon com ID {pokemon_id} atualizado com sucesso!'}), 200
+    else:
+        return jsonify({'error': 'Erro ao atualizar status shiny'}), 500
+
+# Rota para deletar o status shiny de um Pokémon
+@app.route('/shyne/<int:pokemon_id>', methods=['DELETE'])
+def delete_shyne(pokemon_id):
+    result = controller.delete_shyne(pokemon_id)
+    if result == 1:
+        return jsonify({'message': f'Status shiny para o Pokémon com ID {pokemon_id} deletado com sucesso!'}), 200
+    else:
+        return jsonify({'error': 'Erro ao deletar status shiny'}), 500
 if __name__ == '__main__':
     app.run(debug=True)

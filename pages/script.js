@@ -304,3 +304,87 @@ function criaTreinador(){
     });
     mostraTreinadores()
 }
+
+// Função para adicionar o status shiny a um Pokémon
+async function adicionarShyne(pokemonId, isShiny) {
+    const payload = {
+        pokemon_id: pokemonId,
+        is_shiny: isShiny
+    };
+
+    try {
+        const response = await fetch('/shyne', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) throw new Error('Erro ao adicionar status shiny');
+        
+        const data = await response.json();
+        console.log(data.message); // Mensagem de sucesso
+    } catch (error) {
+        console.error('Erro:', error);
+    }
+}
+
+// Função para obter o status shiny de um Pokémon
+async function obterShyne(pokemonId) {
+    try {
+        const response = await fetch(`/shyne/${pokemonId}`, {
+            method: 'GET'
+        });
+
+        if (!response.ok) throw new Error('Erro ao obter status shiny');
+        
+        const data = await response.json();
+        console.log(`Status shiny para o Pokémon com ID ${pokemonId}:`, data);
+        return data; // Retorna o status shiny
+    } catch (error) {
+        console.error('Erro:', error);
+        return null; // Retorna null em caso de erro
+    }
+}
+
+// Função para atualizar o status shiny de um Pokémon
+async function atualizarShyne(pokemonId, isShiny) {
+    const payload = {
+        is_shiny: isShiny
+    };
+
+    try {
+        const response = await fetch(`/shyne/${pokemonId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) throw new Error('Erro ao atualizar status shiny');
+        
+        const data = await response.json();
+        console.log(data.message); // Mensagem de sucesso
+    } catch (error) {
+        console.error('Erro:', error);
+    }
+}
+
+// Função para deletar o status shiny de um Pokémon
+async function deletarShyne(pokemonId) {
+    try {
+        const response = await fetch(`/shyne/${pokemonId}`, {
+            method: 'DELETE'
+        });
+
+        if (!response.ok) throw new Error('Erro ao deletar status shiny');
+
+        const data = await response.json();
+        console.log(data.message); // Mensagem de sucesso
+    } catch (error) {
+        console.error('Erro:', error);
+    }
+}
+
