@@ -222,3 +222,38 @@ function editarPokemon(){
 const abaPokemon = document.getElementById("abaPokemon")
 const abaTreinador = document.getElementById("abaTreinador")
 abaPokemon.addEventListener("click", mostrarPokemons)
+
+function criaTreinador(){
+    let values = {nome: "", idade: 0, experiencia: 0};
+    if (document.getElementById("nome").value == "" || document.getElementById("idade").value == "" || document.getElementById("experiencia").value == "") {
+        alert("Favor preencher todos os campos");
+        return;
+    } else {
+        values.nome = document.getElementById("nome").value;
+        values.idade = parseInt(document.getElementById("idade").value);
+        values.experiencia = parseInt(document.getElementById("experiencia").value);
+    }
+    // console.log(values);
+    let json =JSON.stringify(values)
+    
+    fetch('treinador', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(values) // Converte o objeto para uma string JSON
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Erro ao enviar dados');
+        }
+        return response.json(); // Obtém a resposta JSON (opcional)
+    })
+    .then(data => {
+        console.log('Resposta do servidor:', data); // Manipula a resposta
+    })
+    .catch(error => {
+        console.error('Erro:', error);
+    });
+    mostraTreinadores()
+}

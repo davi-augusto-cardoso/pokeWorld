@@ -24,6 +24,7 @@ class Controller:
     
     # TREINADOR
     def add_trainer(self, params_treinador:dict):
+        print(params_treinador)
         self.__crud.create('treinador', list(params_treinador.values()))
         
     def list_trainer(self, cols:tuple)->dict:

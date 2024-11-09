@@ -85,7 +85,7 @@ def add_treinador():
     params_treinador = request.json
     
     # Chama o método para adicionar o Treinador
-    controller.add_treinador(params_treinador)
+    controller.add_trainer(params_treinador)
     
     return jsonify({'message': 'Treinador adicionado com sucesso!'}), 201
 
