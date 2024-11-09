@@ -51,7 +51,7 @@ def delete_pokemon(id_pokemon):
     # Chama o método para deletar um Pokémon pelo ID
     result = controller.delete_pokemon(id_pokemon)
     
-    if result == 1:
+    if result:
         return jsonify({'message': f'Pokémon com ID {id_pokemon} deletado com sucesso!'}), 200
     else:
         return jsonify({'error': 'Erro ao deletar Pokémon'}), 500
@@ -131,6 +131,18 @@ def edit_treinador(id_treinador):
         return jsonify({'message': f'Treinador com ID {id_treinador} editado com sucesso!'}), 200
     else:
         return jsonify({'error': 'Erro ao editar Treinador'}), 500
+
+@app.route('/party/<int:id_treinador>', methods=['get'])
+def list_party(id_treinador):
+    cols = request.args.get('cols', 'id_party, fk_Treinador_ID_treinador, fk_Pokemon_Id_pokemon').split(',')
+    
+    party = controller.list_party(id_treinador)
+    
+    if party:
+        return jsonify(party), 200
+    else:
+        return jsonify({'error': 'Nenhuma party encontrada'}), 404
+
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -29,7 +29,7 @@ class Controller:
     def list_trainer(self, cols:tuple)->dict:
         return self.__crud.read('treinador', cols)
     
-    def delete_pokemon(self, id_treiandor:int):
+    def delete_treinador(self, id_treiandor:int):
         self.__crud.delete('treinador', 'Id_treinador', id_treiandor)
 
     def edit_treinador(self, id_treiandor:int, new_params:dict):
@@ -43,3 +43,7 @@ class Controller:
                                         'selvagem'  :   False})
 
 
+    def list_party(self, idTreinador)->dict:
+        id_party = self.__crud.read('party', ('id_party'), {'fk_Treinador_ID_treinador' : idTreinador})
+        return self.__crud.read('pokemon',{'fk_Party_id_Party' : id_party})
+    

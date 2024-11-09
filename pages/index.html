@@ -27,24 +27,14 @@
     </header>
     <main>
         <div class="menu" id="menu">
-            <h1>Pokemons</h1>
-            <h1>Treinadores</h1>
+            <button id="AbaPokemon" onclick="mostrarPokemons()"><h1 >Pokemons</h1></button>
+            <button id = "AbaTreinador" onclick="mostraTreinadores()"><h1 >Treinadores</h1></button> 
         </div>
         <div class="conteudo" id="conteudo">
             <div class="acoes" id="acoes">
-                <input type="search" name="nome" id="pesquisa" placeholder="Digite o nome do pokemon">
-                <select name="tipo" id="tipo">
-                    <option value="todos">Todos</option>
-                    <option value="agua">Água</option>
-                    <option value="fogo">Fogo</option>
-                    <option value="planta">Planta</option>
-                    <option value="veneno">Veneno</option>
-                    <option value="normal">Normal</option>
-                    <option value="inseto">Inseto</option>
-                    <option value="eletrico">Eletrico</option>
-                    <option value="fada">Fada</option>
-                </select>
-                <button id="adicionar"><img src="pages/src/plus-svgrepo-com.svg" alt="Adicionar">Adiconar</button>
+                <input type="search" name="nome" id="pesquisa" placeholder="Digite o nome">
+                
+                <button id="adicionar" onclick="mostraModal()"><img src="pages/src/plus-svgrepo-com.svg" alt="Adicionar">Adiconar</button>
             </div>
             <div class="pokemons" id="pokemons" >
                 <!-- <div class="pokemon" id="pokemon">
@@ -57,26 +47,29 @@
         </div>  
         <div class="descricao" id="descricao">
             <h1>Nome</h1>
-            <input type="text" name="nome" id="nome" placeholder="Ex:Pikachu">
+            <input type="text" name="nome" id="discNome" placeholder="Ex:Pikachu">
             <h1>Força</h1>
-            <input type="number" name="forca" id="forca" min="0" placeholder="0">
+            <input type="number" name="forca" id="discforca" min="0" placeholder="0">
             <h1>Resistencia</h1>
-            <input type="number" name="resistencia" id="resistencia" min="0" placeholder="0">
+            <input type="number" name="resistencia" id="discresistencia" min="0" placeholder="0">
             <h1>Velocidade</h1>
-            <input type="number" name="velocidade" id="velocidade" min="0" placeholder="0">
+            <input type="number" name="velocidade" id="discvelocidade" min="0" placeholder="0">
             <h1>Peso</h1>
-            <input type="number" name="peso" id="peso" min="0" placeholder="0">
+            <input type="number" name="peso" id="discpeso" min="0" placeholder="0">
             <h1>Shyne</h1>
-            <input type="checkbox" name="shyne" id="shyne">
+            <input type="checkbox" name="shyne" id="discshyne">
             <h1>Nivel</h1>
-            <input type="number" name="nivel" id="nivel" min="0" placeholder="0">  
+            <input type="number" name="nivel" id="discnivel" min="0" placeholder="0">  
+
+            <button id="editar" onclick="editarPokemon()"><img src="pages/src/edit-svgrepo-com.svg" alt=""></button>
+            
         </div>
     </main>
     <!-- Modal para adicionar pokemon -->
-    <div class="fundoModal" style="display: none;">
+    <div class="fundoModal" id="fundoModal" style="display: none;">
         <div class="modalAdicionarPoke" id="modalAdicionarPoke">
             <div class="modalCima">
-                <button id="fecharModal"><img src="pages/src/clear-svgrepo-com.svg" alt="Fechar" ></button>
+                <button id="fecharModal" onclick="mostraModal()" ><img src="pages/src/clear-svgrepo-com.svg" alt="Fechar" ></button>
                 <h1>Adicionar Pokemon</h1>
                 <div></div>
             </div>
@@ -110,7 +103,7 @@
                     <input type="number" name="nivel" id="nivel" min="1" placeholder="1">
                 </div>
                 <p>Preencha todos os campos</p>
-                <button id="adicionarPoke" onclick="criarJson()">Adicionar</button>
+                <button id="adicionarPoke" onclick="criarPokemon()">Adicionar</button>
             </div>
         </div>
     </div>

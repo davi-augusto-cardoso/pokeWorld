@@ -180,6 +180,18 @@ main {
     }
 }
 
+.Botaodeletar{
+    background-color: rgb(255, 0, 0);
+    color: white;
+}
+.Botaodeletar:hover{
+    background-color: rgb(255, 0, 0);
+    color: white;
+}
+.Botaodeletar:active{
+    transform: scale(0.95);
+}
+
 .pokemon:active{
     transform:scale(0.98);
 }
@@ -204,7 +216,7 @@ main {
 }
 
 .fundoModal {
-    display: flex;
+    display: none;
     background-color: rgba(0, 0, 0, 0.21);
     width: 100%;
     height: 100%;
@@ -215,6 +227,7 @@ main {
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 1;
+
 }
 
 .modalAdicionarPoke {
