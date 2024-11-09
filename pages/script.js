@@ -17,11 +17,11 @@ function criarJson() {
         alert("Favor preencher todos os campos");
         return;
     } else {
-        values.nome = document.getElementById("nome").value;
-        values.forca = parseInt(document.getElementById("forca").value);
-        values.resistencia = parseInt(document.getElementById("resistencia").value);
-        values.velocidade = parseInt(document.getElementById("velocidade").value);
-        values.peso = parseFloat(document.getElementById("peso").value);
+        values.nome     = document.getElementById("nome").value;
+        values.forca    = parseInt(document.getElementById("forca").value);
+        values.resistencia  = parseInt(document.getElementById("resistencia").value);
+        values.velocidade   = parseInt(document.getElementById("velocidade").value);
+        values.peso         = parseFloat(document.getElementById("peso").value);
         if (document.getElementById("shyne").checked) {
             values.shyne = true;
         } else {
