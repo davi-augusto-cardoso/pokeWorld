@@ -29,7 +29,7 @@ class Controller:
                            list(params_treinador.keys()),
                            list(params_treinador.values()))
         
-    def list_trainer(self, cols:tuple)->dict:
+    def list_treinadores(self, cols:tuple)->dict:
         return self.__crud.read('treinador', cols)
     
     def delete_treinador(self, id_treiandor:int):

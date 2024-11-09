@@ -90,15 +90,7 @@ async function getTreinadores(cols){
 }
 
 
-function getParty(idTreinador){
-    fetch(`party/${idTreinador}`)
-    .then(resp => resp.json())
-    .then(data => {
-        return data;
-    }) // Adicionado return
-}
-
-let dictpokes = [];
+var dictpokes = [];
 async function mostrarPokemons() {
     document.getElementById("adicionar").onclick = mostraModalpoke;
     dictpokes = JSON.parse(await getPokemons(["Id_pokemon", "nome", "forca", "resistencia", "velocidade", "peso", "shyne", "nivel", "fk_party_id_Party"]));
@@ -124,8 +116,9 @@ async function mostrarPokemons() {
 let listTreinadores = [];
 
 async function mostraTreinadores() {
+
     document.getElementById("adicionar").onclick = mostraModaltreinador;
-    listTreinadores = JSON.parse(await getTreinadores(["ID_treinador","Nome"])); 
+    listTreinadores = JSON.parse(await getTreinadores(["ID_treinador","Nome", "genero", "cpf"])); 
 
     if (listTreinadores < 0) {
         console.log("Nenhum treinador encontrado");
@@ -146,44 +139,52 @@ async function mostraTreinadores() {
 
 function obterParty(ID_treinador){
     let parts = []
-    for(pokes in dictpokes){
-        if(pokes["fk_party_id_Party"] == ID_treinador){
-            parts.push(pokes)
+    console.log("dictpokes", dictpokes)
+    dictpokes.forEach((pokemon) => {
+        if(pokemon["fk_party_id_Party"] == ID_treinador){
+            parts.push(pokemon)
         }
+    })
     return parts
-}
 }
 
 function mostraPokemonsParty(id){
-    document.getElementById("descricaoPokemon").style.display = "flex";
-    document.getElementById("descricaoTreinador").style.display = "none";
+
     let party = obterParty(id)
     const card = document.getElementById("pokemons");
     card.innerHTML = ""
     party.forEach((pokemon) => {
-        card.innerHTML += `<div class="pokemon" data-id=${pokemon['Id_pokemon']} onclick="mostrarDescricao(${pokemon["Id_pokemon"]})"> <h1> ${pokemon["nome"]}</h1> <button class=Botaodeletar onclick=botaoDeletar(${pokemon["Id_pokemon"]})><img src="pages/src/trash-blank-svgrepo-com.svg" alt="deletar" id="imgDeletar"></button> </div>`
+        card.innerHTML += `<div class="pokemon" data-id=${pokemon['Id_pokemon']} onclick="mostrarDescricaoPokemon(${pokemon["Id_pokemon"]})"> <h1> ${pokemon["nome"]}</h1> <button class=Botaodeletar onclick=botaoDeletar(${pokemon["Id_pokemon"]})><img src="pages/src/trash-blank-svgrepo-com.svg" alt="deletar" id="imgDeletar"></button> </div>`
     })
+    
 }
 
 function mostrarDescricaoTreinador(ID_treinador) {
-    let treinador;
+    let treinado;
+    console.log(listTreinadores)
     listTreinadores.forEach((treinador) => {
+        console.log(treinador["ID_treinador"]);
         if(treinador["ID_treinador"] == ID_treinador) {
-            treinador = treinador;
+            treinado = treinador;
         }
     })
+
+    if(treinado == undefined) {
+        console.log("Treinador não encontrado");
+        return;
+    }
 
 
     document.getElementById("descricaoPokemon").style.display = "none";
     document.getElementById("descricaoTreinador").style.display = "flex";
 
-    document.getElementById("discNome").value = treinador["Nome"];
-    document.getElementById("data_nascTreinador").value = treinador["data_nasc"];
-    document.getElementById("generoTreinador").value = treinador["genero"];
-    document.getElementById("cpfTreinador").value = treinador["cpf"];
-    document.getElementById("editar").dataset.id = ID_treinador;
+    document.getElementById("discNomeTreinador").value = treinado["Nome"];
+    document.getElementById("discgeneroTreinador").value = treinado["genero"];
+    document.getElementById("disccpfTreinador").value = treinado["cpf"];
+    document.getElementById("editarTreinador").dataset.id = ID_treinador;
 
     mostraPokemonsParty(ID_treinador)
+
 }
 
 // Chama a função para exibir os pokémons
@@ -198,6 +199,8 @@ async function mostrarDescricaoPokemon(id_pokemon) {
     
     })
 
+    document.getElementById("descricaoPokemon").style.display = "flex";
+    document.getElementById("descricaoTreinador").style.display = "none";
     document.getElementById("discNome").value = pkemon["nome"];
     document.getElementById("discforca").value = pkemon["forca"];
     document.getElementById("discresistencia").value = pkemon["resistencia"];
@@ -239,6 +242,7 @@ async function editarPokemon(){
     const velocidade = document.getElementById("discvelocidade").value;
     const peso = document.getElementById("discpeso").value;
     const nivel = document.getElementById("discnivel").value;
+    const fk = document.getElementById("IdPokemonTreinador").value;
     const id = document.getElementById("editarPokemon").dataset.id;
     
     fetch(`pokemon/${id}`, {
@@ -252,11 +256,13 @@ async function editarPokemon(){
             resistencia: resistencia,
             velocidade: velocidade,
             peso: peso,
-            nivel: nivel
+            nivel: nivel,
+            fk_Party_id_Party: fk
         })
     })
     .then(response => response.json())
     .then(data => {
+        mostrarPokemons()
         console.log("Pokémon atualizado com sucesso:", data);
     })
     .catch(error => {
@@ -267,7 +273,6 @@ async function editarPokemon(){
 function editarTreinador(){
     // Pega os valores dos campos e edita o treinador
     nome = document.getElementById("discNomeTreinador").value
-    data_nasc= document.getElementById("discdata_nascTreinador").value
     genero=document.getElementById("discgeneroTreinador").value
     cpf = document.getElementById("cpfTreinador").value;
 
@@ -276,7 +281,7 @@ function editarTreinador(){
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({nome: nome, data_nasc: data_nasc, genero: genero, cpf: cpf})
+        body: JSON.stringify({nome: nome, genero: genero, cpf: cpf})
     }).then(resp => resp.json())
     .then(data => {
         console.log(data)
@@ -289,7 +294,6 @@ function criaTreinador(){
     let values = {nome: "",data_nasc:"", genero:"",cpf:""};
 
         values.nome = document.getElementById("nomeTreinador").value;
-        values.data_nasc = document.getElementById("data_nascTreinador").value;
         values.cpf = document.getElementById("cpfTreinador").value;
         values.genero = document.getElementById("generoTreinador").value;
 

@@ -47,7 +47,7 @@
         </div>  
 
         <div  class="descricao" id="descricao">
-            <div class="descricao" id="descricaoPokemon">
+            <div  id="descricaoPokemon">
                 <h1>Nome</h1>
                 <input type="text" name="nome" id="discNome" placeholder="Ex:Pikachu">
                 <h1>Força</h1>
@@ -62,20 +62,22 @@
                 <input type="checkbox" name="shyne" id="discshyne">
                 <h1>Nivel</h1>
                 <input type="number" name="nivel" id="discnivel" min="0" placeholder="0">  
-    
+                <h1>Treinador</h1>
+                <input id="IdPokemonTreinador" aria-placeholder="Id do Treinador">
                 <button id="editarPokemon" data-id="" onclick="editarPokemon()"><img src="pages/src/edit-svgrepo-com.svg" alt=""></button>
             </div>
     
-            <div class="descricao" id="descricaoTreinador">
+            <div  id="descricaoTreinador">
+                <h1>Id</h1>
+                <label id="Id_Treinador" aria-placeholder="id do Treinador"></label>
                 <h1>Nome</h1>
                 <input type="text" name="nome" id="discNomeTreinador" placeholder="Ex:eshi">
-                <h1>Data de Nascimento</h1>
-                <input type="date" name="data" id="discdata_nascTreinador">
                 <h1>Genero</h1>
                 <input type="text" name="genero" id="discgeneroTreinador" placeholder="Ex:Masculino">
                 <h1>Cpf</h1>
                 <input type="text" name="cpf" id="disccpfTreinador" min="11" placeholder="Ex:123.456.789-00">
                 <button id="editarTreinador" data-id="" onclick="editarTreinador()"><img src="pages/src/edit-svgrepo-com.svg" alt=""></button>
+
             </div>
 
         </div>
@@ -133,10 +135,6 @@
                 <div class="nome">
                     <label for="nome">Nome</label>
                     <input type="text" name="nome" id="nomeTreinador" placeholder="Ex:Ashe">
-                </div>
-                <div class="data">
-                    <label for="data">Data de Nascimento</label>
-                    <input type="date" name="data" id="data_nascTreinador">
                 </div>
                 <div class="genero">
                     <label for="genero">Genero</label>

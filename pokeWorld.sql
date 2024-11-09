@@ -123,13 +123,12 @@ DELIMITER ;
 DELIMITER $$
 
 CREATE TRIGGER libertar_pokemon 
-AFTER DELETE ON Party  -- Adicione o nome da tabela que dispara a trigger
+AFTER DELETE ON Party
 FOR EACH ROW
 BEGIN
     UPDATE Pokemon 
     SET selvagem = true
-    WHERE fk_Party_id_Party = OLD.id_Party;  -- Use o nome correto da coluna
+    WHERE fk_Party_id_Party = OLD.id_Party;
 END$$
 
 DELIMITER ;
-

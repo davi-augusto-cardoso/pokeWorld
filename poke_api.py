@@ -71,9 +71,8 @@ def add_treinador():
 
 @app.route('/treinador', methods=['GET'])
 def list_treinadores():
-    cols = request.args.get('cols', 'nome, data_nasc, genero, CPF').split(',')
-    treinadores = controller.list_trainer(cols)  # Corrigido o nome da função para `list_trainer`
-
+    cols = request.args.get('cols','ID_treinador, nome, genero, cpf').split(',')
+    treinadores = controller.list_treinadores(cols)
     if treinadores:
         return jsonify(treinadores), 200
     else:
