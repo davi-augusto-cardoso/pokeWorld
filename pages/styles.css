@@ -11,7 +11,7 @@ body {
 }
 
 header {
-    background-color: rgb(248, 248, 248);
+    background-color: rgb(84, 103, 249);;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
@@ -56,11 +56,13 @@ main {
     display: flex;
     flex-direction: row;
     height: 100%;
+    width: 100%;
+    justify-content: space-between;
 }
 
 .menu {
     position: relative;
-    background-color: rgb(209, 209, 209);
+    background-color: rgb(84, 103, 249);;
     width: 15vw;
     height: 99.7%;
     display: flex;
@@ -69,7 +71,6 @@ main {
     justify-content: start;
     font-family: 'itim', cursive;
     box-shadow: 3px 0px rgba(0, 0, 0, 0.382);
-    border-top: 2px solid rgba(0, 0, 0, 0.681);
 }
 
 .menu > h1 {
@@ -82,15 +83,135 @@ main {
 }
 
 .conteudo {
-    background-color:aqua ;
+    background-color:rgb(110, 5, 214) ;
     width: 60vw;
-    margin: 1vi 0 0 3vi;
+    margin: 1vi 3vi 0 3vi;
     border-radius: 1vi;
     box-shadow: -3px 3px rgba(0, 0, 0, 0.382);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.acoes {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: 4vi;
+}
+
+#pesquisa {
+    width: 12vw;
+    height: 3vh;
+    border: none;
+    border-radius: 0.5vi;
+}
+
+#pesquisa:focus {
+    outline: none;
+}
+
+#tipo {
+    width: 6vw;
+    height: 3vh;
+    border: none;
+    border-radius: 0.5vi;
+}
+
+#adicionar {
+    display: flex;
+    align-items: center;
+    img {
+        padding: 0 0.5vi 0.1vi 0;
+
+    }
+}
+
+.pokemons {
+    background-color: #e1e1e1;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 95%;
+    height: 83.6%;
+    overflow-y: auto;
+    border-radius: 1vi;
+    padding: 1vi;
+}
+
+.pokemons::-webkit-scrollbar-button {
+    display: none;
+}
+
+.pokemon {
+    cursor: pointer;
+    display: flex;
+    background-color: rgb(255, 222, 0);
+    height: 7vh;
+    width: 97%;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 1vi;
+    margin-bottom: 1vi;
+    h1 {
+        padding-left: 1vi;
+    }
+    
+    button {
+        border: none;
+        background-color: rgb(255, 255, 255);
+        border-radius: 0.5vi;
+        cursor: pointer;
+        margin-right: 3%;
+        img {
+            padding-top: 0.2vi;
+            width: 100%;
+            height: 100%;
+        }
+    }
+    button:active {
+        transform: scale(0.92);
+    }
+    img:active{
+        transform: scale(0.95);
+    }
+}
+
+.Botaodeletar{
+    background-color: rgb(255, 0, 0);
+    color: white;
+}
+.Botaodeletar:hover{
+    background-color: rgb(255, 0, 0);
+    color: white;
+}
+.Botaodeletar:active{
+    transform: scale(0.95);
+}
+.pokemon:hover {
+    background-color: rgb(255, 255, 0);
+}
+
+.descricao {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(84, 103, 249);
+    width: 18vw;
+    height: 97.5%;
+    margin-top: 1vi;
+    border-radius: 1vi;
+    margin-right: 1vi;
+    h1 {
+        font-size: medium;
+    }
 }
 
 .fundoModal {
-    display: flex;
+    display: none;
     background-color: rgba(0, 0, 0, 0.21);
     width: 100%;
     height: 100%;
@@ -101,9 +222,10 @@ main {
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 1;
+
 }
 
-.modalAdicionarPoke {
+.modalAdicionarPoke, .modalAdicionarTreiandor {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;

@@ -1,54 +1,90 @@
 <!DOCTYPE html>
 <html lang="PT-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="src/pokebola.ico">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/inputmask/5.0.6/inputmask.min.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Itim&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Nerko+One&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <script src="script.js" defer></script>
-    <title>Pokedex</title>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!-- Link para o ícone ou outras imagens, se necessário -->
+        <link rel="icon" type="image/x-icon" href="/pages/src/pokebola.ico">
+    
+        <!-- Links para fontes externas e máscaras de entrada -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/inputmask/5.0.6/inputmask.min.js"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Itim&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900&family=Nerko+One&display=swap" rel="stylesheet">
+        
+        <!-- Arquivos CSS e JavaScript internos -->
+        <link rel="stylesheet" href="/pages/styles.css">
+        <script src="/pages/script.js"></script>
+        
+        <title>Pokedex</title>
+    </head>
 <body>
     <header>
-        <button id="burger-bar" class="burger-bar" onclick="mostraMenu()"><img src='src/burger-menu-svgrepo-com.svg' alt='Botão de menu'></button>
+        <button id="burger-bar" class="burger-bar" onclick="mostraMenu()"><img src='pages/src/burger-menu-svgrepo-com.svg' alt='Botão de menu'></button>
         <h1>Pokedex</h1>
         <div class="espacador"></div>
     </header>
     <main>
         <div class="menu" id="menu">
-
+            <button id="AbaPokemon" onclick="mostrarPokemons()"><h1 >Pokemons</h1></button>
+            <button id = "AbaTreinador" onclick="mostraTreinadores()"><h1 >Treinadores</h1></button> 
         </div>
-        <div class="conteudo" id="conteudo" hidden>
+        <div class="conteudo" id="conteudo">
             <div class="acoes" id="acoes">
-                <input type="search" name="nome" id="pesquisa" placeholder="Digite o nome do pokemon">
-                <select name="tipo" id="tipo">
-                    <option value="todos">Todos</option>
-                    <option value="agua">Água</option>
-                    <option value="fogo">Fogo</option>
-                    <option value="planta">Planta</option>
-                    <option value="veneno">Veneno</option>
-                    <option value="normal">Normal</option>
-                    <option value="inseto">Inseto</option>
-                    <option value="eletrico">Eletrico</option>
-                    <option value="fada">Fada</option>
-                </select>
-            <button id="adicionar"><img src="src/plus-svgrepo-com.svg" alt="Adicionar">Adiconar</button>
+                <input type="search" name="nome" id="pesquisa" placeholder="Digite o nome">
+                
+                <button id="adicionar" onclick="mostraModal()"><img src="pages/src/plus-svgrepo-com.svg" alt="Adicionar">Adiconar</button>
+            </div>
+            <div class="pokemons" id="pokemons" >
+                <!-- <div class="pokemon" id="pokemon">
+                    <h1>Pokemon</h1>
+                </div>
+                <div class="pokemon" id="pokemon">
+                    <h1>Pokemon</h1>
+                </div> -->
             </div>
         </div>  
-        <div class="descricao" id="descricao" hidden>
-            <h1>Nome</h1>
-            <img src="src/pokebola.ico" alt="Imagem">
+
+        <div  class="descricao" id="descricao">
+            <div class="descricao" id="descricaoPokemon">
+                <h1>Nome</h1>
+                <input type="text" name="nome" id="discNome" placeholder="Ex:Pikachu">
+                <h1>Força</h1>
+                <input type="number" name="forca" id="discforca" min="0" placeholder="0">
+                <h1>Resistencia</h1>
+                <input type="number" name="resistencia" id="discresistencia" min="0" placeholder="0">
+                <h1>Velocidade</h1>
+                <input type="number" name="velocidade" id="discvelocidade" min="0" placeholder="0">
+                <h1>Peso</h1>
+                <input type="number" name="peso" id="discpeso" min="0" placeholder="0">
+                <h1>Shyne</h1>
+                <input type="checkbox" name="shyne" id="discshyne">
+                <h1>Nivel</h1>
+                <input type="number" name="nivel" id="discnivel" min="0" placeholder="0">  
+    
+                <button id="editarPokemon" onclick="editarPokemon()"><img src="pages/src/edit-svgrepo-com.svg" alt=""></button>
+            </div>
+    
+            <div class="descricao" id="descricaoTreinador">
+                <h1>Nome</h1>
+                <input type="text" name="nome" id="discNomeTreinador" placeholder="Ex:eshi">
+                <h1>Data de Nascimento</h1>
+                <input type="date" name="data" id="discdata_nascTreinador">
+                <h1>Genero</h1>
+                <input type="text" name="genero" id="discgeneroTreinador" placeholder="Ex:Masculino">
+                <h1>Cpf</h1>
+                <input type="text" name="cpf" id="disccpfTreinador" min="11" placeholder="Ex:123.456.789-00">
+                <button id="editarTreinador" onclick="editarTreinador()"><img src="pages/src/edit-svgrepo-com.svg" alt=""></button>
+            </div>
+
         </div>
     </main>
     <!-- Modal para adicionar pokemon -->
-    <div class="fundoModal" style="display: flex;">
+    <div class="fundoModal" id="fundoModalpoke" style="display: none;">
         <div class="modalAdicionarPoke" id="modalAdicionarPoke">
             <div class="modalCima">
-                <button id="fecharModal"><img src="src/clear-svgrepo-com.svg" alt="Fechar"></button>
+                <button id="fecharModalpoke" onclick="mostraModalpoke()" ><img src="pages/src/clear-svgrepo-com.svg" alt="Fechar" ></button>
                 <h1>Adicionar Pokemon</h1>
                 <div></div>
             </div>
@@ -82,7 +118,36 @@
                     <input type="number" name="nivel" id="nivel" min="1" placeholder="1">
                 </div>
                 <p>Preencha todos os campos</p>
-                <button id="adicionarPoke" onclick="criarJson()">Adicionar</button>
+                <button id="adicionarPoke" onclick="criarPokemon()">Adicionar</button>
+            </div>
+        </div>
+    </div>
+    <div class="fundoModal" id="fundoModaltreiner" style="display: none;">
+        <div class="modalAdicionarTreiandor" id="modalAdicionarTreinador">
+            <div class="modalCima">
+                <button id="fecharModaltreiner" onclick="mostraModaltreinador()" ><img src="pages/src/clear-svgrepo-com.svg" alt="Fechar" ></button>
+                <h1>Adicionar Treinador</h1>
+                <div></div>
+            </div>
+            <div class="conteudoModal">
+                <div class="nome">
+                    <label for="nome">Nome</label>
+                    <input type="text" name="nome" id="nomeTreinador" placeholder="Ex:Ashe">
+                </div>
+                <div class="data">
+                    <label for="data">Data de Nascimento</label>
+                    <input type="date" name="data" id="data_nascTreinador">
+                </div>
+                <div class="genero">
+                    <label for="genero">Genero</label>
+                    <input type="text" name="genero" id="generoTreinador" placeholder="Ex:Masculino">
+                </div>
+                <div class="cpf">
+                    <label for="cpf">Cpf</label>
+                    <input type="text" name="cpf" id="cpfTreinador" min="11" placeholder="Ex:123.456.789-00">
+                </div>
+                <p>Preencha todos os campos</p>
+                <button id="adicionarTreiner" onclick="criaTreinador()">Adicionar</button>
             </div>
         </div>
     </div>
@@ -92,7 +157,7 @@
 <!-- Pokemon:
 nome -> textarea
 força -> number
-resistência -> number
+resistência -> number   
 velocidade -> number
 peso -> number
 shyne -> checkbox
