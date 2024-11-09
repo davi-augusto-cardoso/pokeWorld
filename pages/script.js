@@ -265,7 +265,7 @@ async function editarPokemon(){
 }
 
 function editarTreinador(){
-
+    // Pega os valores dos campos e edita o treinador
     nome = document.getElementById("discNomeTreinador").value
     data_nasc= document.getElementById("discdata_nascTreinador").value
     genero=document.getElementById("discgeneroTreinador").value
