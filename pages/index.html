@@ -62,8 +62,9 @@
                 <input type="checkbox" name="shyne" id="discshyne">
                 <h1>Nivel</h1>
                 <input type="number" name="nivel" id="discnivel" min="0" placeholder="0">  
-    
-                <button id="editarPokemon" onclick="editarPokemon()"><img src="pages/src/edit-svgrepo-com.svg" alt=""></button>
+                <h1>Treinador</h1>
+                <input id="IdPokemonTreinador" aria-placeholder="Id do Treinador">
+                <button id="editarPokemon" data-id="" onclick="editarPokemon()"><img src="pages/src/edit-svgrepo-com.svg" alt=""></button>
             </div>
     
             <div class="descricao" id="descricaoTreinador">
@@ -76,7 +77,8 @@
                 <input type="text" name="genero" id="discgeneroTreinador" placeholder="Ex:Masculino">
                 <h1>Cpf</h1>
                 <input type="text" name="cpf" id="disccpfTreinador" min="11" placeholder="Ex:123.456.789-00">
-                <button id="editarTreinador" onclick="editarTreinador()"><img src="pages/src/edit-svgrepo-com.svg" alt=""></button>
+                <button id="editarTreinador" data-id="" onclick="editarTreinador()"><img src="pages/src/edit-svgrepo-com.svg" alt=""></button>
+
             </div>
 
         </div>

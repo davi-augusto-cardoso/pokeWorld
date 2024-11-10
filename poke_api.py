@@ -1,4 +1,4 @@
-from imports import Flask, request, jsonify, CORS
+from imports import Flask, request, jsonify, CORS, send_from_directory
 from controller import Controller
 
 controller = Controller()
@@ -6,23 +6,31 @@ controller = Controller()
 app = Flask(__name__)
 CORS(app)
 
+@app.route('/')
+def home():
+    return send_from_directory('pages', 'index.html')
+
+@app.route('/pages/<path:filename>')
+def static_files(filename):
+    return send_from_directory('pages', filename)
+
+@app.route('/pages/src/<path:filename>')
+def images(filename):
+    return send_from_directory('pages/src', filename)
+
+# Rotas para Pokémon
 @app.route('/pokemon', methods=['POST'])
 def add_pokemon():
-    # Verifica se os dados do Pokémon foram enviados no corpo da requisição
     if not request.json:
         return jsonify({'error': 'Dados inválidos. O corpo da requisição deve estar no formato JSON'}), 400
-    
-    # Extrai os parâmetros do Pokémon a partir do corpo da requisição
+
     params_pokemon = request.json
     controller.add_pokemon(params_pokemon)
     return jsonify({'message': 'Pokémon adicionado com sucesso!'}), 201
 
 @app.route('/pokemon', methods=['GET'])
 def list_pokemons():
-    # Obtém as colunas desejadas da requisição ou usa todas por padrão
-    cols = request.args.get('cols', 'nome, forca, resistencia, velocidade, peso, Shyne, nivel, fk_Party_id_Party, selvagem').split(',')
-    
-    # Chama o método para listar os Pokémons
+    cols = request.args.get('cols', 'Id_pokemon, nome, forca, resistencia, velocidade, peso, shyne, nivel, fk_party_id_Party, selvagem').split(',')
     pokemons = controller.list_pokemons(cols)
 
     if pokemons:
@@ -32,7 +40,6 @@ def list_pokemons():
 
 @app.route('/pokemon/<int:id_pokemon>', methods=['DELETE'])
 def delete_pokemon(id_pokemon):
-    # Chama o método para deletar um Pokémon pelo ID
     result = controller.delete_pokemon(id_pokemon)
     if result:
         return jsonify({'message': f'Pokémon com ID {id_pokemon} deletado com sucesso!'}), 200
@@ -41,11 +48,9 @@ def delete_pokemon(id_pokemon):
 
 @app.route('/pokemon/<int:id_pokemon>', methods=['PUT'])
 def edit_pokemon(id_pokemon):
-    # Verifica se os dados do Pokémon foram enviados no corpo da requisição
     if not request.json:
         return jsonify({'error': 'Dados inválidos. O corpo da requisição deve estar no formato JSON'}), 400
-    
-    # Extrai os novos parâmetros do Pokémon
+
     new_params = request.json
     result = controller.edit_pokemon(id_pokemon, new_params)
 
@@ -57,25 +62,17 @@ def edit_pokemon(id_pokemon):
 # Rotas para Treinador
 @app.route('/treinador', methods=['POST'])
 def add_treinador():
-    # Verifica se os dados do Treinador foram enviados no corpo da requisição
     if not request.json:
         return jsonify({'error': 'Dados inválidos. O corpo da requisição deve estar no formato JSON'}), 400
 
     params_treinador = request.json
-    
-    # Chama o método para adicionar o Treinador
-    controller.add_treinador(params_treinador)
-    
+    controller.add_trainer(params_treinador)
     return jsonify({'message': 'Treinador adicionado com sucesso!'}), 201
 
 @app.route('/treinador', methods=['GET'])
 def list_treinadores():
-    # Obtém as colunas desejadas da requisição ou usa todas por padrão
-    cols = request.args.get('cols', 'nome, idade, experiencia, fk_party_id').split(',')
-    
-    # Chama o método para listar os Treinadores
+    cols = request.args.get('cols','ID_treinador, nome, genero, cpf').split(',')
     treinadores = controller.list_treinadores(cols)
-    
     if treinadores:
         return jsonify(treinadores), 200
     else:
@@ -83,7 +80,6 @@ def list_treinadores():
 
 @app.route('/treinador/<int:id_treinador>', methods=['DELETE'])
 def delete_treinador(id_treinador):
-    # Chama o método para deletar um Treinador pelo ID
     result = controller.delete_treinador(id_treinador)
     if result == 1:
         return jsonify({'message': f'Treinador com ID {id_treinador} deletado com sucesso!'}), 200
@@ -92,11 +88,9 @@ def delete_treinador(id_treinador):
 
 @app.route('/treinador/<int:id_treinador>', methods=['PUT'])
 def edit_treinador(id_treinador):
-    # Verifica se os dados do Treinador foram enviados no corpo da requisição
     if not request.json:
         return jsonify({'error': 'Dados inválidos. O corpo da requisição deve estar no formato JSON'}), 400
-    
-    # Extrai os novos parâmetros do Treinador
+
     new_params = request.json
     result = controller.edit_treinador(id_treinador, new_params)
 
@@ -116,51 +110,5 @@ def list_party(id_treinador):
     else:
         return jsonify({'error': 'Nenhuma party encontrada'}), 404
 
-
-@app.route('/shyne', methods=['POST'])
-def add_shyne():
-    if not request.json or 'pokemon_id' not in request.json or 'is_shiny' not in request.json:
-        return jsonify({'error': 'Dados inválidos. É necessário enviar pokemon_id e is_shiny no formato JSON'}), 400
-
-    pokemon_id = request.json['pokemon_id']
-    is_shiny = request.json['is_shiny']
-    
-    result = controller.add_shyne(pokemon_id, is_shiny)
-    if result == 1:
-        return jsonify({'message': f'Status shiny para o Pokémon com ID {pokemon_id} adicionado com sucesso!'}), 201
-    else:
-        return jsonify({'error': 'Erro ao adicionar status shiny'}), 500
-
-# Rota para obter o status shiny de um Pokémon
-@app.route('/shyne/<int:pokemon_id>', methods=['GET'])
-def get_shyne(pokemon_id):
-    result = controller.get_shyne(pokemon_id)
-    if result:
-        return jsonify(result), 200
-    else:
-        return jsonify({'error': f'Status shiny para o Pokémon com ID {pokemon_id} não encontrado'}), 404
-
-# Rota para atualizar o status shiny de um Pokémon
-@app.route('/shyne/<int:pokemon_id>', methods=['PUT'])
-def update_shyne(pokemon_id):
-    if not request.json or 'is_shiny' not in request.json:
-        return jsonify({'error': 'Dados inválidos. É necessário enviar is_shiny no formato JSON'}), 400
-
-    is_shiny = request.json['is_shiny']
-    result = controller.update_shyne(pokemon_id, is_shiny)
-    
-    if result == 1:
-        return jsonify({'message': f'Status shiny para o Pokémon com ID {pokemon_id} atualizado com sucesso!'}), 200
-    else:
-        return jsonify({'error': 'Erro ao atualizar status shiny'}), 500
-
-# Rota para deletar o status shiny de um Pokémon
-@app.route('/shyne/<int:pokemon_id>', methods=['DELETE'])
-def delete_shyne(pokemon_id):
-    result = controller.delete_shyne(pokemon_id)
-    if result == 1:
-        return jsonify({'message': f'Status shiny para o Pokémon com ID {pokemon_id} deletado com sucesso!'}), 200
-    else:
-        return jsonify({'error': 'Erro ao deletar status shiny'}), 500
 if __name__ == '__main__':
     app.run(debug=True)

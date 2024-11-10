@@ -25,11 +25,11 @@ function criarPokemon() {
         alert("Favor preencher todos os campos");
         return;
     } else {
-        values.nome     = document.getElementById("nome").value;
-        values.forca    = parseInt(document.getElementById("forca").value);
-        values.resistencia  = parseInt(document.getElementById("resistencia").value);
-        values.velocidade   = parseInt(document.getElementById("velocidade").value);
-        values.peso         = parseFloat(document.getElementById("peso").value);
+        values.nome = document.getElementById("nome").value;
+        values.forca = parseInt(document.getElementById("forca").value);
+        values.resistencia = parseInt(document.getElementById("resistencia").value);
+        values.velocidade = parseInt(document.getElementById("velocidade").value);
+        values.peso = parseFloat(document.getElementById("peso").value);
         if (document.getElementById("shyne").checked) {
             values.shyne = true;
         } else {
@@ -173,13 +173,18 @@ function mostrarDescricaoTreinador(ID_treinador) {
         }
     })
 
-    document.getElementById("descricaoTreinador").style.display = "flex";
+    if(treinado == undefined) {
+        console.log("Treinador não encontrado");
+        return;
+    }
+    
     document.getElementById("descricaoPokemon").style.display = "none";
+    document.getElementById("descricaoTreinador").style.display = "flex";
 
-    document.getElementById("discNome").value = treinador["nome"];
-    document.getElementById("data_nascTreinador").value = treinador["data_nasc"];
-    document.getElementById("generoTreinador").value = treinador["genero"];
-    document.getElementById("cpfTreinador").value = treinador["cpf"];
+    document.getElementById("LabelIdTreinador").innerHTML = ID_treinador;
+    document.getElementById("discNomeTreinador").value = treinado["Nome"];
+    document.getElementById("discgeneroTreinador").value = treinado["genero"];
+    document.getElementById("disccpfTreinador").value = treinado["cpf"];
     document.getElementById("editarTreinador").dataset.id = ID_treinador;
 
     mostraPokemonsParty(ID_treinador)
@@ -191,8 +196,6 @@ function mostrarDescricaoTreinador(ID_treinador) {
 
 async function mostrarDescricaoPokemon(id_pokemon) {
     let pkemon;
-    document.getElementById("descricaoTreinador").style.display = "none";
-    document.getElementById("descricaoPokemon").style.display = "flex";
     
     dictpokes.forEach((pokemon) => {
     if(pokemon["Id_pokemon"] == id_pokemon) {
@@ -211,6 +214,7 @@ async function mostrarDescricaoPokemon(id_pokemon) {
     document.getElementById("discpeso").value = pkemon["peso"];
     document.getElementById("discshyne").checked = pkemon["shyne"];
     document.getElementById("discnivel").value = pkemon["nivel"];
+    document.getElementById("IdPokemonTreinador").value = pkemon["fk_party_id_Party"];
     document.getElementById("editarPokemon").dataset.id = id_pokemon;
 }
 
@@ -249,6 +253,7 @@ async function editarPokemon(){
     const velocidade = document.getElementById("discvelocidade").value;
     const peso = document.getElementById("discpeso").value;
     const nivel = document.getElementById("discnivel").value;
+    const fk = document.getElementById("IdPokemonTreinador").value;
     const id = document.getElementById("editarPokemon").dataset.id;
     
     fetch(`pokemon/${id}`, {
@@ -281,7 +286,6 @@ function editarTreinador(){
     nome = document.getElementById("discNomeTreinador").value
     genero=document.getElementById("discgeneroTreinador").value
     cpf = document.getElementById("cpfTreinador").value;
-    id = document.getElementById("editarTreinador").dataset.id
 
     fetch(`treinador/${id}`, {
         method: 'PUT',
@@ -298,7 +302,7 @@ function editarTreinador(){
 }
 
 function criaTreinador(){
-    let values = {nome: "",data_nasc:"", genero:"",cpf:""};
+    let values = {nome: "", genero:"",cpf:""};
 
         values.nome = document.getElementById("nomeTreinador").value;
         values.cpf = document.getElementById("cpfTreinador").value;
@@ -306,8 +310,7 @@ function criaTreinador(){
         let Json = JSON.stringify(values)
         console.log(Json)
 
-    let json =JSON.stringify(values)
-    console.log(json)
+    
     fetch('treinador', {
         method: 'POST',
         headers: {
@@ -332,87 +335,3 @@ function criaTreinador(){
     }); 
 
 }
-
-// Função para adicionar o status shiny a um Pokémon
-async function adicionarShyne(pokemonId, isShiny) {
-    const payload = {
-        pokemon_id: pokemonId,
-        is_shiny: isShiny
-    };
-
-    try {
-        const response = await fetch('/shyne', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(payload)
-        });
-
-        if (!response.ok) throw new Error('Erro ao adicionar status shiny');
-        
-        const data = await response.json();
-        console.log(data.message); // Mensagem de sucesso
-    } catch (error) {
-        console.error('Erro:', error);
-    }
-}
-
-// Função para obter o status shiny de um Pokémon
-async function obterShyne(pokemonId) {
-    try {
-        const response = await fetch(`/shyne/${pokemonId}`, {
-            method: 'GET'
-        });
-
-        if (!response.ok) throw new Error('Erro ao obter status shiny');
-        
-        const data = await response.json();
-        console.log(`Status shiny para o Pokémon com ID ${pokemonId}:`, data);
-        return data; // Retorna o status shiny
-    } catch (error) {
-        console.error('Erro:', error);
-        return null; // Retorna null em caso de erro
-    }
-}
-
-// Função para atualizar o status shiny de um Pokémon
-async function atualizarShyne(pokemonId, isShiny) {
-    const payload = {
-        is_shiny: isShiny
-    };
-
-    try {
-        const response = await fetch(`/shyne/${pokemonId}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(payload)
-        });
-
-        if (!response.ok) throw new Error('Erro ao atualizar status shiny');
-        
-        const data = await response.json();
-        console.log(data.message); // Mensagem de sucesso
-    } catch (error) {
-        console.error('Erro:', error);
-    }
-}
-
-// Função para deletar o status shiny de um Pokémon
-async function deletarShyne(pokemonId) {
-    try {
-        const response = await fetch(`/shyne/${pokemonId}`, {
-            method: 'DELETE'
-        });
-
-        if (!response.ok) throw new Error('Erro ao deletar status shiny');
-
-        const data = await response.json();
-        console.log(data.message); // Mensagem de sucesso
-    } catch (error) {
-        console.error('Erro:', error);
-    }
-}
-
