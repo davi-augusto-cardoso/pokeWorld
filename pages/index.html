@@ -21,19 +21,17 @@
     </head>
 <body>
     <header>
-        <button id="burger-bar" class="burger-bar" onclick="mostraMenu()"><img src='pages/src/burger-menu-svgrepo-com.svg' alt='Botão de menu'></button>
         <h1>Pokedex</h1>
-        <div class="espacador"></div>
     </header>
     <main>
         <div class="menu" id="menu">
-            <button id="AbaPokemon" onclick="mostrarPokemons()"><h1 >Pokemons</h1></button>
-            <button id = "AbaTreinador" onclick="mostraTreinadores()"><h1 >Treinadores</h1></button> 
+            <button class="abaPokemon" id="AbaPokemon" onclick="mostrarPokemons()"><h1 >Pokemons</h1></button>
+            <button class="abaTreinador" id="AbaTreinador" onclick="mostraTreinadores()"><h1 >Treinadores</h1></button> 
         </div>
         <div class="conteudo" id="conteudo">
             <div class="acoes" id="acoes">
-                <input type="search" name="nome" id="pesquisa" placeholder="Digite o nome">
-                
+                <div class="Hspacer"></div>
+                <h1 id="titulo">Pokemons</h1>
                 <button id="adicionar" onclick=""><img src="pages/src/plus-svgrepo-com.svg" alt="Adicionar">Adiconar</button>
             </div>
             <div class="pokemons" id="pokemons" >
@@ -47,44 +45,68 @@
         </div>  
 
         <div  class="descricaobox" id="descricao">
-            <div class="descricao" id="descricaoPokemon">
-                <h1>Nome</h1>
-                <input type="text" name="nome" id="discNome" placeholder="Ex:Pikachu">
-                <h1>Força</h1>
-                <input type="number" name="forca" id="discforca" min="0" placeholder="0">
-                <h1>Resistencia</h1>
-                <input type="number" name="resistencia" id="discresistencia" min="0" placeholder="0">
-                <h1>Velocidade</h1>
-                <input type="number" name="velocidade" id="discvelocidade" min="0" placeholder="0">
-                <h1>Peso</h1>
-                <input type="number" name="peso" id="discpeso" min="0" placeholder="0">
-                <h1>Shyne</h1>
-                <input type="checkbox" name="shyne" id="discshyne">
-                <h1>Nivel</h1>
-                <input type="number" name="nivel" id="discnivel" min="0" placeholder="0">  
-                <h1>Treinador</h1>
-                <input id="IdPokemonTreinador" aria-placeholder="Id do Treinador">
-                <button id="editarPokemon" data-id="" onclick="editarPokemon()"><img src="pages/src/edit-svgrepo-com.svg" alt=""></button>
+            <div class="descricaoPokemon" id="descricaoPokemon" style="display: none;">
+                <div class="nomePoke">
+                    <label for="nome">Nome</label>
+                    <input type="text" name="nome" id="discNome" placeholder="Ex:Pikachu" >
+                </div>
+                <div class="forcaPoke">
+                    <label for="forca">Força</label>
+                    <input type="number" name="forca" id="discforca" min="0" placeholder="0">
+                </div>
+                <div class="resistenciaPoke">
+                    <label for="resistencia">Resistencia</label>
+                    <input type="number" name="resistencia" id="discresistencia" min="0" 
+                    placeholder="0">
+                </div>
+                <div class="velocidadePoke">
+                    <label for="velocidade">Velocidade</label>
+                    <input type="number" name="velocidade" id="discvelocidade" min="0" placeholder="0">
+                </div>
+                <div class="pesoPoke">
+                    <label for="peso">Peso</label>
+                    <input type="number" name="peso" id="discpeso" min="0" placeholder="0">
+                </div>
+                <div class="shynePoke">
+                    <label for="shyne">Shyne</label>
+                    <input type="checkbox" name="shyne" id="discshyne">
+                </div>
+                <div class="nivelPoke">
+                    <label for="nivel">Nivel</label>
+                    <input type="number" name="nivel" id="discnivel" min="0" placeholder="0">  
+                </div>
+                <div class="treinadorPoke">
+                    <label for="IdPokemonTreinador">ID do Treinador</label>
+                    <input id="IdPokemonTreinador" aria-placeholder="Id do Treinador">
+                </div>
+                <button id="editarPokemon" data-id="" onclick="editarPokemon()"><img src="pages/src/edit-svgrepo-com.svg" alt=""> Editar</button>
             </div>
     
-            <div class="descricao" id="descricaoTreinador">
-
-                <h1>Id</h1>
-                <label id="LabelIdTreinador" aria-placeholder="id do Treinador"></label>
-                <h1>Nome</h1>
-                <input type="text" name="nome" id="discNomeTreinador" placeholder="Ex:eshi">
-                <h1>Genero</h1>
-                <input type="text" name="genero" id="discgeneroTreinador" placeholder="Ex:Masculino">
-                <h1>Cpf</h1>
-                <input type="text" name="cpf" id="disccpfTreinador" min="11" placeholder="Ex:123.456.789-00">
-                <button id="editarTreinador" data-id="" onclick="editarTreinador()"><img src="pages/src/edit-svgrepo-com.svg" alt=""></button>
+            <div class="descricaoTreinador" id="descricaoTreinador" style="display: none;">
+                <div class="divIdTreinador">    
+                    <h1>Id</h1>
+                    <label id="LabelIdTreinador" aria-placeholder="id do Treinador"></label>
+                </div>
+                <div class="nomeTreinador">
+                    <label for="nome">Nome</label>
+                    <input type="text" name="nome" id="discNomeTreinador" placeholder="Ex:eshi">
+                </div>
+                <div class="generoTreinador">
+                    <label for="genero">Genero</label>
+                    <input type="text" name="genero" id="discgeneroTreinador" placeholder="Ex:Masculino">
+                </div>
+                <div class="cpfTreinador">
+                    <label for="cpf">Cpf</label>
+                    <input type="text" name="cpf" id="disccpfTreinador" min="11" placeholder="Ex:123.456.789-00">
+                </div>
+                <button id="editarTreinador" data-id="" onclick="editarTreinador()"><img src="pages/src/edit-svgrepo-com.svg" alt="">Editar</button>
 
             </div>
 
         </div>
     </main>
     <!-- Modal para adicionar pokemon -->
-    <div class="fundoModal" id="fundoModalpoke" style="display: none;">
+    <div class="fundoModal" id="fundoModalpoke" style="display: flex;">
         <div class="modalAdicionarPoke" id="modalAdicionarPoke">
             <div class="modalCima">
                 <button id="fecharModalpoke" onclick="mostraModalpoke()" ><img src="pages/src/clear-svgrepo-com.svg" alt="Fechar" ></button>

@@ -5,20 +5,6 @@ descricao = document.getElementById("descricao");
 
 inicializaPokes()
 
-function mostraMenu() {
-    if (menu.style.display === "none") {
-        document.getElementById("burger-bar").innerHTML = "<img src='src/burger-menu-right-svgrepo-com.svg' alt='Botão de menu'></img>";
-        conteudo.style.width = "60vw";
-        descricao.style.width = "18vw";
-        menu.style.display = "flex";
-    } else {
-        document.getElementById("burger-bar").innerHTML = "<img src='src/burger-menu-svgrepo-com.svg' alt='Botão de menu'></img>";
-        conteudo.style.width = "73vw";
-        descricao.style.width = "25vw";
-        menu.style.display = "none";
-    }
-}
-
 function criarPokemon() {
     let values = {nome: "", forca: 0, resistencia: 0, velocidade: 0, peso: 0, shyne: false, nivel: 0};
     if (document.getElementById("nome").value == "" || document.getElementById("forca").value == "" || document.getElementById("resistencia").value == "" || document.getElementById("velocidade").value == "" || document.getElementById("peso").value == "" || document.getElementById("nivel").value == "") {
@@ -96,6 +82,8 @@ async function inicializaPokes(){
     dictpokes = JSON.parse(await getPokemons(["Id_pokemon", "nome", "forca", "resistencia", "velocidade", "peso", "shyne", "nivel", "fk_party_id_Party"]));
 }
 async function mostrarPokemons() {
+    document.getElementById("titulo").innerHTML = "Pokemons";
+
     document.getElementById("adicionar").onclick = mostraModalpoke;
     dictpokes = JSON.parse(await getPokemons(["Id_pokemon", "nome", "forca", "resistencia", "velocidade", "peso", "shyne", "nivel", "fk_party_id_Party"]));
     
@@ -120,6 +108,8 @@ async function mostrarPokemons() {
 let listTreinadores = [];
 
 async function mostraTreinadores() {
+    document.getElementById("titulo").innerHTML = "Treinadores";
+
 
     document.getElementById("adicionar").onclick = mostraModaltreinador;
     listTreinadores = JSON.parse(await getTreinadores(["ID_treinador","Nome", "genero", "cpf"])); 
@@ -186,7 +176,8 @@ function mostrarDescricaoTreinador(ID_treinador) {
     document.getElementById("discgeneroTreinador").value = treinado["genero"];
     document.getElementById("disccpfTreinador").value = treinado["cpf"];
     document.getElementById("editarTreinador").dataset.id = ID_treinador;
-
+    document.getElementById("titulo").innerHTML = `Party de ${treinado["Nome"]}`;
+    
     mostraPokemonsParty(ID_treinador)
 
 }
@@ -283,9 +274,10 @@ async function editarPokemon(){
 
 function editarTreinador(){
     // Pega os valores dos campos e edita o treinador
-    nome = document.getElementById("discNomeTreinador").value
-    genero=document.getElementById("discgeneroTreinador").value
-    cpf = document.getElementById("cpfTreinador").value;
+    const nome = document.getElementById("discNomeTreinador").value
+    const genero=document.getElementById("discgeneroTreinador").value
+    const cpf = document.getElementById("cpfTreinador").value;
+    const id = document.getElementById("editarTreinador").dataset.id;
 
     fetch(`treinador/${id}`, {
         method: 'PUT',

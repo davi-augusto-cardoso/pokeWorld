@@ -20,36 +20,9 @@ header {
     box-shadow: 0px 2.5px rgba(0, 0, 0, 0.469);
 }
 
-.burger-bar {
-    position: relative;
-    right: 18vi;
-    width: 3vi;
-    height: 3vi;
-    border: none;
-    background-color: rgb(208, 208, 208);
-    border-radius: 50%;
-    cursor: pointer;
-    box-shadow: 2px 2px rgba(0, 0, 0, 0.635);
-}
-
-.burger-bar:hover{ 
-    transform: scale(1.05);
-}
-
-.burger-bar > img {
-    width: 100%;
-    height: 100%;
-}
-
 header > h1 {
     font-family: itim, sans-serif;
     font-size:50px;
-    margin-left: 3vi;
-}
-
-.espacador {
-    width: 7vi;
-    height: 1vi;
 }
 
 main {
@@ -73,13 +46,33 @@ main {
     box-shadow: 3px 0px rgba(0, 0, 0, 0.382);
 }
 
-.menu > h1 {
-    height: 1vi;
+.abaPokemon {
+    margin-top:2vi;
 }
 
-.menu > h1:hover {
+.menu > button {
+    display: flex;
+    height: 4vi;
+    width: 90%;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1vi;
+    border: none;
+    border-radius: 1vi;
+    background-color: rgb(130, 176, 246);
+    h1 {
+        font-family: 'itim', cursive;
+        font-size: 2.5vi;
+    }
+}
+
+.menu > button:hover {
     transform: scale(1.05);
     cursor: pointer;
+}
+
+.menu > button:active {
+    transform: scale(0.95);
 }
 
 .conteudo {
@@ -94,6 +87,10 @@ main {
     justify-content: center;
 }
 
+.Hspacer {
+    width: 10vi;
+}
+
 .acoes {
     display: flex;
     flex-direction: row;
@@ -103,31 +100,26 @@ main {
     height: 4vi;
 }
 
-#pesquisa {
-    width: 12vw;
-    height: 3vh;
-    border: none;
-    border-radius: 0.5vi;
-}
-
-#pesquisa:focus {
-    outline: none;
-}
-
-#tipo {
-    width: 6vw;
-    height: 3vh;
-    border: none;
-    border-radius: 0.5vi;
-}
-
 #adicionar {
+    position: relative;
+    left: 5vi;
     display: flex;
     align-items: center;
+    margin-right:2vi;
+    border: none;
+    border-radius: 0.5vi;
+    background-color: rgb(237, 238, 238);
     img {
         padding: 0 0.5vi 0.1vi 0;
-
     }
+}
+#adicionar:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+#adicionar:active {
+    transform: scale(0.95);
 }
 
 .pokemons {
@@ -151,7 +143,7 @@ main {
     display: flex;
     background-color: rgb(255, 222, 0);
     height: 7vh;
-    width: 97%;
+    width: 99%;
     align-items: center;
     justify-content: space-between;
     border-radius: 1vi;
@@ -180,13 +172,11 @@ main {
     }
 }
 
-.Botaodeletar{
-    background-color: rgb(255, 0, 0);
-    color: white;
-}
 .Botaodeletar:hover{
     background-color: rgb(255, 0, 0);
-    color: white;
+    img {
+        filter: invert(100%);
+    }
 }
 .Botaodeletar:active{
     transform: scale(0.95);
@@ -195,7 +185,74 @@ main {
     background-color: rgb(255, 255, 0);
 }
 
-.descricao {
+.descricaoPokemon {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(84, 103, 249);
+    width: 18vw;
+    height: 97.5%;
+    margin-top: 1vi;
+    border-radius: 1vi;
+    margin-right: 1vi;
+}
+
+.nomePoke {
+    margin-top:2vi;
+}
+
+.nomePoke, .forcaPoke, .resistenciaPoke, .velocidadePoke, .pesoPoke, .shynePoke, .nivelPoke {
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    width: 100%;
+    margin-bottom: 1vi;
+    margin-left: 1vi;
+    label {
+        font-size: x-large;
+    }
+    input {
+        border:none;
+        border-radius: 0.3vi;
+        margin-left:0.2vi;
+        margin-top:0.2vi;
+    }
+    input:focus {
+        outline: none;
+    }
+}
+
+.forcaPoke, .resistenciaPoke, .velocidadePoke, .pesoPoke, .nivelPoke {
+    input {
+        width: 10%;
+    }
+}
+
+.treinadorPoke {
+    display:flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    width: 100%;
+    margin-bottom: 1vi;
+    margin-left: 1vi;
+    label {
+        font-size: x-large;
+    }
+    input {
+        border:none;
+        border-radius: 0.3vi;
+        margin-left:0.2vi;
+        margin-top:0.2vi;
+        width: 50%;
+    }
+    input:focus {
+        outline: none;
+    }
+}
+
+.descricaoTreinador {
     display:flex;
     flex-direction: column;
     align-items: center;
@@ -208,6 +265,77 @@ main {
     h1 {
         font-size: medium;
     }
+}
+
+.divIdTreinador {
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    width: 100%;
+    margin-bottom: 1vi;
+    margin-left: 1.2vi;
+    margin-top: 0.5vi;
+    h1 {
+        font-size: 1.3vi;
+    }
+    label {
+        background-color: #e1e1e1;
+        text-align: center;
+        font-weight: bold;
+        font-size: 1.3vi;
+        margin-left:0.5vi;
+        width: 2vi;
+        border-radius: 0.5vi;
+    }
+}
+
+.nomeTreinador, .generoTreinador, .cpfTreinador {
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    width: 100%;
+    margin-bottom: 1vi;
+    margin-left: 1.2vi;
+    label {
+        font-size: x-large;
+    }
+    input {
+        border:none;
+        border-radius: 0.3vi;
+        margin-left:0.5vi;
+        margin-top:0.2vi;
+    }
+    input:focus {
+        outline: none;
+    }
+}
+
+#editarPokemon,#editarTreinador {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border:none;
+    background-color: rgb(229, 228, 228);
+    border-radius: 0.5vi;
+    cursor: pointer;
+    width: 6.5vw;
+    height: 2.5vw;
+    font-size: large;
+    img {
+        width: 2vi;
+        height: 2vi;
+        margin-right: 0.5vi;
+    }
+}
+
+#editarPokemon:hover, #editarTreinador:hover{
+    transform: scale(1.05);
+}
+
+#editarPokemon:active, #editarTreinador:active{
+    transform: scale(0.95);
 }
 
 .descricaobox{
