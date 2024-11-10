@@ -268,7 +268,8 @@ async function editarPokemon(){
     })
     .catch(error => {
         console.error("Erro ao atualizar Pokémon:", error);
-    });
+    }).finally(() => {mostraTreinadores()});
+
 }
 
 function editarTreinador(){
