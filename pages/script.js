@@ -2,7 +2,7 @@ botao = document.getElementById("burger-bar");
 menu = document.getElementById("menu");
 conteudo = document.getElementById("conteudo");
 descricao = document.getElementById("descricao");
-
+var dictpokes = [];
 inicializaPokes()
 
 function criarPokemon() {
@@ -77,10 +77,10 @@ async function getTreinadores(cols){
 }
 
 
-var dictpokes = [];
 async function inicializaPokes(){
     dictpokes = JSON.parse(await getPokemons(["Id_pokemon", "nome", "forca", "resistencia", "velocidade", "peso", "shyne", "nivel", "fk_party_id_Party"]));
 }
+
 async function mostrarPokemons() {
     document.getElementById("titulo").innerHTML = "Pokemons";
 
@@ -108,12 +108,7 @@ async function mostrarPokemons() {
 let listTreinadores = [];
 
 async function mostraTreinadores() {
-    document.getElementById("titulo").innerHTML = "Treinadores";
-
-
-    document.getElementById("adicionar").onclick = mostraModaltreinador;
     listTreinadores = JSON.parse(await getTreinadores(["ID_treinador","Nome", "genero", "cpf"])); 
-
     if (listTreinadores < 0) {
         console.log("Nenhum treinador encontrado");
         return;
@@ -129,6 +124,8 @@ async function mostraTreinadores() {
                                </button>
                            </div>`;
     });
+    document.getElementById("titulo").innerHTML = "Treinadores";
+    document.getElementById("adicionar").onclick = mostraModaltreinador;
 }
 
 function obterParty(ID_treinador){
@@ -183,8 +180,6 @@ function mostrarDescricaoTreinador(ID_treinador) {
 }
 
 // Chama a função para exibir os pokémons
-
-
 async function mostrarDescricaoPokemon(id_pokemon) {
     let pkemon;
     
@@ -268,15 +263,14 @@ async function editarPokemon(){
     })
     .catch(error => {
         console.error("Erro ao atualizar Pokémon:", error);
-    }).finally(() => {mostraTreinadores()});
-
+    })
 }
 
 function editarTreinador(){
     // Pega os valores dos campos e edita o treinador
     const nome = document.getElementById("discNomeTreinador").value
     const genero=document.getElementById("discgeneroTreinador").value
-    const cpf = document.getElementById("cpfTreinador").value;
+    const cpf = document.getElementById("disccpfTreinador").value;
     const id = document.getElementById("editarTreinador").dataset.id;
 
     fetch(`treinador/${id}`, {
@@ -285,11 +279,13 @@ function editarTreinador(){
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({nome: nome, genero: genero, cpf: cpf})
-    }).then(resp => resp.json())
+    })
+    .then(resp => resp.json())
     .then(data => {
         console.log(data)
-    })
-
+    }).finally(() => {
+        mostraTreinadores()
+    } )
 
 }
 

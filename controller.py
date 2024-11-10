@@ -38,7 +38,7 @@ class Controller:
     def edit_treinador(self, id_treiandor:int, new_params:dict):
         return self.__crud.update('treinador', new_params, 'Id_treinador', id_treiandor)
 
-    # PARTY
+    # PARTY    
     def add_party(self, id_treinador:int, id_pokemon:int):
         id_party = self.__crud.read('party', ('id_party'), {'fk_Treinador_ID_treinador' : id_treinador})
         
