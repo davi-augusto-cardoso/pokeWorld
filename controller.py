@@ -33,10 +33,10 @@ class Controller:
         return self.__crud.read('treinador', cols)
     
     def delete_treinador(self, id_treiandor:int):
-        self.__crud.delete('treinador', 'Id_treinador', id_treiandor)
+        return self.__crud.delete('treinador', 'Id_treinador', id_treiandor)
 
     def edit_treinador(self, id_treiandor:int, new_params:dict):
-        self.__crud.update('treinador', new_params, 'Id_treinador', id_treiandor)
+        return self.__crud.update('treinador', new_params, 'Id_treinador', id_treiandor)
 
     # PARTY
     def add_party(self, id_treinador:int, id_pokemon:int):
