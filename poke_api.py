@@ -1,4 +1,4 @@
-from imports import Flask, request, jsonify, CORS, send_from_directory
+from imports import Flask, request, jsonify, CORS
 from controller import Controller
 
 controller = Controller()
