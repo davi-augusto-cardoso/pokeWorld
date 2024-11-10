@@ -9,6 +9,7 @@ CREATE TABLE Regiao (
     ID_regial INT PRIMARY KEY
 );
 
+
 CREATE TABLE Pokemon (
     nome VARCHAR(20) NOT NULL,
     Id_pokemon INT PRIMARY KEY auto_increment,
