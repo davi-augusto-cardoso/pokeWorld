@@ -3,6 +3,8 @@ menu = document.getElementById("menu");
 conteudo = document.getElementById("conteudo");
 descricao = document.getElementById("descricao");
 
+inicializaPokes()
+
 function mostraMenu() {
     if (menu.style.display === "none") {
         document.getElementById("burger-bar").innerHTML = "<img src='src/burger-menu-right-svgrepo-com.svg' alt='Botão de menu'></img>";
@@ -91,6 +93,9 @@ async function getTreinadores(cols){
 
 
 var dictpokes = [];
+async function inicializaPokes(){
+    dictpokes = JSON.parse(await getPokemons(["Id_pokemon", "nome", "forca", "resistencia", "velocidade", "peso", "shyne", "nivel", "fk_party_id_Party"]));
+}
 async function mostrarPokemons() {
     document.getElementById("adicionar").onclick = mostraModalpoke;
     dictpokes = JSON.parse(await getPokemons(["Id_pokemon", "nome", "forca", "resistencia", "velocidade", "peso", "shyne", "nivel", "fk_party_id_Party"]));
@@ -116,6 +121,7 @@ async function mostrarPokemons() {
 let listTreinadores = [];
 
 async function mostraTreinadores() {
+
 
     document.getElementById("adicionar").onclick = mostraModaltreinador;
     listTreinadores = JSON.parse(await getTreinadores(["ID_treinador","Nome", "genero", "cpf"])); 
@@ -178,6 +184,7 @@ function mostrarDescricaoTreinador(ID_treinador) {
     document.getElementById("descricaoPokemon").style.display = "none";
     document.getElementById("descricaoTreinador").style.display = "flex";
 
+    document.getElementById("LabelIdTreinador").innerHTML = ID_treinador;
     document.getElementById("discNomeTreinador").value = treinado["Nome"];
     document.getElementById("discgeneroTreinador").value = treinado["genero"];
     document.getElementById("disccpfTreinador").value = treinado["cpf"];
@@ -291,7 +298,7 @@ function editarTreinador(){
 }
 
 function criaTreinador(){
-    let values = {nome: "",data_nasc:"", genero:"",cpf:""};
+    let values = {nome: "", genero:"",cpf:""};
 
         values.nome = document.getElementById("nomeTreinador").value;
         values.cpf = document.getElementById("cpfTreinador").value;

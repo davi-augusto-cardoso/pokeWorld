@@ -92,6 +92,7 @@ class CRUD:
             self.__cursor.execute(query, values)  # Passa os valores de forma segura
             self.__connection.commit()
             print("Atualizacao realizada com sucesso.")
+
             return 1
             
         except mysql.Error as error:

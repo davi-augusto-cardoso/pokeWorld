@@ -23,9 +23,6 @@ CREATE TABLE Pokemon (
 );
 
 
-
-
-
 CREATE TABLE Treinador (
     ID_treinador INT PRIMARY KEY auto_increment,
     Nome VARCHAR(50) NOT NULL ,
@@ -71,7 +68,7 @@ CREATE TABLE Poke_elemento (
 ALTER TABLE Pokemon ADD CONSTRAINT FK_Pokemon_2
     FOREIGN KEY (fk_Party_id_Party)
     REFERENCES Party (id_Party)
-    ON DELETE RESTRICT;
+    ON DELETE NO ACTION;
  
 ALTER TABLE Party ADD CONSTRAINT FK_Party_2
     FOREIGN KEY (fk_Treinador_ID_treinador)
@@ -120,15 +117,17 @@ END$$
 
 DELIMITER ;
 
+drof if exist trigger libertar_pokemon;
 DELIMITER $$
 
 CREATE TRIGGER libertar_pokemon 
-AFTER DELETE ON Party
+before DELETE ON Party
 FOR EACH ROW
 BEGIN
     UPDATE Pokemon 
-    SET selvagem = true
+    SET selvagem = true, fk_Party_id_Party = NULL
     WHERE fk_Party_id_Party = OLD.id_Party;
+
 END$$
 
 DELIMITER ;
