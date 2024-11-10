@@ -26,7 +26,6 @@ CREATE TABLE Pokemon (
 CREATE TABLE Treinador (
     ID_treinador INT PRIMARY KEY auto_increment,
     Nome VARCHAR(50) NOT NULL ,
-    data_nasc DATE NOT NULL,
     genero VARCHAR(20) NOT NULL,
     CPF VARCHAR(20) NOT NULL
 );

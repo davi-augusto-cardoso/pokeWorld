@@ -38,7 +38,6 @@ function criarPokemon() {
         values.nivel = parseInt(document.getElementById("nivel").value);
     }
     // console.log(values);
-    let json =JSON.stringify(values)
     
     fetch('pokemon', {
         method: 'POST',
@@ -122,7 +121,6 @@ let listTreinadores = [];
 
 async function mostraTreinadores() {
 
-
     document.getElementById("adicionar").onclick = mostraModaltreinador;
     listTreinadores = JSON.parse(await getTreinadores(["ID_treinador","Nome", "genero", "cpf"])); 
 
@@ -179,8 +177,7 @@ function mostrarDescricaoTreinador(ID_treinador) {
         console.log("Treinador não encontrado");
         return;
     }
-
-
+    
     document.getElementById("descricaoPokemon").style.display = "none";
     document.getElementById("descricaoTreinador").style.display = "flex";
 
@@ -196,6 +193,7 @@ function mostrarDescricaoTreinador(ID_treinador) {
 
 // Chama a função para exibir os pokémons
 
+
 async function mostrarDescricaoPokemon(id_pokemon) {
     let pkemon;
     
@@ -208,6 +206,7 @@ async function mostrarDescricaoPokemon(id_pokemon) {
 
     document.getElementById("descricaoPokemon").style.display = "flex";
     document.getElementById("descricaoTreinador").style.display = "none";
+
     document.getElementById("discNome").value = pkemon["nome"];
     document.getElementById("discforca").value = pkemon["forca"];
     document.getElementById("discresistencia").value = pkemon["resistencia"];
@@ -215,6 +214,7 @@ async function mostrarDescricaoPokemon(id_pokemon) {
     document.getElementById("discpeso").value = pkemon["peso"];
     document.getElementById("discshyne").checked = pkemon["shyne"];
     document.getElementById("discnivel").value = pkemon["nivel"];
+    document.getElementById("IdPokemonTreinador").value = pkemon["fk_party_id_Party"];
     document.getElementById("editarPokemon").dataset.id = id_pokemon;
 }
 
@@ -222,6 +222,10 @@ function botaoDeletar(id){
     console.log(id)
     fetch(`pokemon/${id}`, {
         method: 'DELETE',
+    }).then(resp => resp.json())
+    .then(data => {
+        console.log(data)
+        mostrarPokemons()
     })
 }
 
@@ -303,27 +307,31 @@ function criaTreinador(){
         values.nome = document.getElementById("nomeTreinador").value;
         values.cpf = document.getElementById("cpfTreinador").value;
         values.genero = document.getElementById("generoTreinador").value;
+        let Json = JSON.stringify(values)
+        console.log(Json)
 
-    let json =JSON.stringify(values)
     
     fetch('treinador', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: json // Converte o objeto para uma string JSON
+        body: JSON.stringify(values)
     })
     .then(response => {
         if (!response.ok) {
             throw new Error('Erro ao enviar dados');
         }
-        return response.json(); // Obtém a resposta JSON (opcional)
+        return response.json();
     })
     .then(data => {
-        console.log('Resposta do servidor:', data); // Manipula a resposta
+        console.log('Resposta do servidor:', data);
     })
     .catch(error => {
         console.error('Erro:', error);
-    });
-    mostraTreinadores()
+    })
+    .finally(() => {
+        mostraTreinadores()
+    }); 
+
 }

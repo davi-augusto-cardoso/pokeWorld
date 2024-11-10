@@ -48,6 +48,7 @@ class CRUD:
             return 1
             
         except mysql.DatabaseError as error:
+            self.__connection.reconnect()
             print(f"Erro de banco de dados: {error}")
             return -1
     
@@ -96,6 +97,7 @@ class CRUD:
             return 1
             
         except mysql.Error as error:
+            self.__connection.reconnect()
             print(f"Erro de operacao: {error}")
             return -1
 
@@ -109,6 +111,7 @@ class CRUD:
             return 1
             
         except mysql.Error as error:
+            self.__connection.reconnect()
             print(f"Erro de operacao: {error}")
             return -1
     
