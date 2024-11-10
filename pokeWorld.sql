@@ -117,7 +117,6 @@ END$$
 
 DELIMITER ;
 
-drof if exist trigger libertar_pokemon;
 DELIMITER $$
 
 CREATE TRIGGER libertar_pokemon 

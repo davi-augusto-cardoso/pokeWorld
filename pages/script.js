@@ -201,7 +201,6 @@ async function mostrarDescricaoPokemon(id_pokemon) {
     if(pokemon["Id_pokemon"] == id_pokemon) {
             pkemon = pokemon;
     }
-    
     })
 
     document.getElementById("descricaoPokemon").style.display = "flex";
@@ -283,9 +282,11 @@ async function editarPokemon(){
 
 function editarTreinador(){
     // Pega os valores dos campos e edita o treinador
-    nome = document.getElementById("discNomeTreinador").value
-    genero=document.getElementById("discgeneroTreinador").value
-    cpf = document.getElementById("cpfTreinador").value;
+    const nome = document.getElementById("discNomeTreinador").value
+    const genero=document.getElementById("discgeneroTreinador").value
+    const cpf = document.getElementById("cpfTreinador").value;
+
+    id = document.getElementById("editarTreinador").dataset.id;
 
     fetch(`treinador/${id}`, {
         method: 'PUT',
