@@ -79,3 +79,5 @@ Este projeto está licenciado sob a [Kiba não Pray] - consulte o arquivo LICENS
 ---
 
 **Nota:** Substitua `"localhost"`, `"meu_banco"`, `"meu_usuario"`, e `"minha_senha"` pelas configurações do seu banco de dados.
+
+versao pronta

@@ -34,7 +34,7 @@
             <div class="acoes" id="acoes">
                 <input type="search" name="nome" id="pesquisa" placeholder="Digite o nome">
                 
-                <button id="adicionar" onclick="mostraModal()"><img src="pages/src/plus-svgrepo-com.svg" alt="Adicionar">Adiconar</button>
+                <button id="adicionar" onclick=""><img src="pages/src/plus-svgrepo-com.svg" alt="Adicionar">Adiconar</button>
             </div>
             <div class="pokemons" id="pokemons" >
                 <!-- <div class="pokemon" id="pokemon">
@@ -46,7 +46,7 @@
             </div>
         </div>  
 
-        <div  class="descricao" id="descricao">
+        <div  class="descricaobox" id="descricao">
             <div class="descricao" id="descricaoPokemon">
                 <h1>Nome</h1>
                 <input type="text" name="nome" id="discNome" placeholder="Ex:Pikachu">
@@ -67,10 +67,11 @@
             </div>
     
             <div class="descricao" id="descricaoTreinador">
+
+                <h1>Id</h1>
+                <label id="LabelIdTreinador" aria-placeholder="id do Treinador"></label>
                 <h1>Nome</h1>
                 <input type="text" name="nome" id="discNomeTreinador" placeholder="Ex:eshi">
-                <h1>Data de Nascimento</h1>
-                <input type="date" name="data" id="discdata_nascTreinador">
                 <h1>Genero</h1>
                 <input type="text" name="genero" id="discgeneroTreinador" placeholder="Ex:Masculino">
                 <h1>Cpf</h1>
@@ -133,10 +134,6 @@
                 <div class="nome">
                     <label for="nome">Nome</label>
                     <input type="text" name="nome" id="nomeTreinador" placeholder="Ex:Ashe">
-                </div>
-                <div class="data">
-                    <label for="data">Data de Nascimento</label>
-                    <input type="date" name="data" id="data_nascTreinador">
                 </div>
                 <div class="genero">
                     <label for="genero">Genero</label>
